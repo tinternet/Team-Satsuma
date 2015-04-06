@@ -2,10 +2,37 @@
 <html lang="en">
 <head>
 	<title>Untitled</title>
-	
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap.theme.min.css">
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+<div class="container">
+	<div class="row page-header border">
+		<div class="row border">
+			<div class="col-md-3 main-logo border">Logo(needs to be in img tag)</div>
+			<div class="col-md-4 col-md-offset-5 border">User info if logged / Login-SignUp if not logged</div>
+		</div>
+		<div class="row border">
+			<div class="col-md-8 border">
+				Website main menu(main | forum | about | team | contact)
+			</div>
+		</div>
+	</div>
+
+	<div class="row main-body border">
+		<section class="col-md-9 forum-categories border">Forum categories when you click on Forum from the main menu</section>
+		<aside class="col-md-3 new-topics border">Small aside element for the newest topics in the forum</aside>
+	</div>
+
+	<div class="row panel-footer border">
+		<div class="row border">
+			<div class="col-md-8 border">An inline forum-tree (shows your path in the forum categories), small size font</div>
+			<div class="col-md-8 border">An inline main menu with a small size font</div>
+		</div>
+	</div>
+</div>
+
 
 <!-- JS includes -->
 <script src="js/lib/jquery-2.1.3.min.js"></script>
