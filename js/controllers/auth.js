@@ -1,5 +1,5 @@
 "use strict";
-define(function() {
+define( [ "auth" ], function( auth ) {
 
 var
 	$authContainer = $( "#authentication-container" ),
@@ -8,9 +8,9 @@ var
 	$signupForm = $( "#signup-form" );
 	
 function updateAuthContainer() {
-	var user = Parse.User.current();
+	//var user = Parse.User.current();
 	
-	if ( user ) {
+	if ( auth.isLoggedIn ) {
 		$authContainer
 			.find( ".greetings a" )
 				.text( user.attributes.username )
@@ -55,26 +55,6 @@ function login( userName, password ) {
 	});
 }
 
-function register( firstName, lastName, userName, password, verifyPassword ) {
-	new Parse.User().signUp(
-		{
-			"username": userName,
-			"password": password
-		},
-		{
-			success: function( user ) {
-				$authModal.modal( "hide" );
-				updateAuthContainer();
-			},
-			error: function( user, error ) {
-				$signupForm
-					.find( "p" )
-					.text( error.message )
-					.removeClass( "hidden" );
-			}
-		}
-	);
-}
 
 // Clear all fields on modal close
 $authModal.on( "hide.bs.modal", function( e ) {
@@ -127,13 +107,10 @@ $authContainer.on( "click", "a", function( e ) {
 $signupForm.on( "submit", function( e ) {
 	e.preventDefault();
 	
-	var firstName = $( "#first-name-input" ).val(),
-		lastName = $("#last-name-input").val(),
-		userName = $( "#username-input" ).val(),
-		password = $( "#password-input" ).val(),
-		verifyPassword = $( "#verify-password-input").val();
+	var userName = $( "#username-input" ).val(),
+		password = $( "#password-input" ).val();
 		
-	register( firstName, lastName, userName, password, verifyPassword );
+	auth.register( userName, password );
 });
 
 $loginForm.on( "submit", function( e ) {
@@ -142,7 +119,7 @@ $loginForm.on( "submit", function( e ) {
 	var userName = $( "#username-login-input" ).val(),
 		password = $( "#password-login-input" ).val();
 		
-	login( userName, password );
+	auth.login( userName, password );
 });
 	
 // Set initial state
