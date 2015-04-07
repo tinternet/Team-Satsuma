@@ -55,7 +55,7 @@ function login( userName, password ) {
 	});
 }
 
-function register( userName, password ) {
+function register( firstName, lastName, userName, password, verifyPassword ) {
 	new Parse.User().signUp(
 		{
 			"username": userName,
@@ -127,10 +127,13 @@ $authContainer.on( "click", "a", function( e ) {
 $signupForm.on( "submit", function( e ) {
 	e.preventDefault();
 	
-	var userName = $( "#username-input" ).val(),
-		password = $( "#password-input" ).val();
+	var firstName = $( "#first-name-input" ).val(),
+		lastName = $("#last-name-input").val(),
+		userName = $( "#username-input" ).val(),
+		password = $( "#password-input" ).val(),
+		verifyPassword = $( "#verify-password-input").val();
 		
-	register( userName, password );
+	register( firstName, lastName, userName, password, verifyPassword );
 });
 
 $loginForm.on( "submit", function( e ) {
