@@ -1,5 +1,5 @@
 "use strict";
-define( [ "./jquery-plugins" ], function() {
+define(function() {
 var
 	
 	$authContainer = $( "#authentication-container" ),
@@ -43,9 +43,7 @@ function login( userName, password ) {
 	Parse.User.logIn( userName, password,
 	{
 		success: function( user ) {
-			$authModal
-				.addClass( "bounceOutUp" )
-				.autoHide( 500 );
+			$authModal.modal( "hide" );
 			updateAuthContainer();
 		},
 		error: function( user, error ) {
@@ -65,9 +63,7 @@ function register( userName, password ) {
 		},
 		{
 			success: function( user ) {
-				$authModal
-					.addClass( "bounceOutUp" )
-					.autoHide( 500 );
+				$authModal.modal( "hide" );
 				updateAuthContainer();
 			},
 			error: function( user, error ) {
@@ -84,15 +80,23 @@ function init() {
 	updateAuthContainer();
 	
 	// Clear all fields on modal close
-	$authModal.on( "hidden.bs.modal", function() {
+	$authModal.on( "hide.bs.modal", function( e ) {
 		$authModal
-			.removeClass( "bounceOutUp" )
+			.removeClass( "rollIn" )
+			.addClass( "rollOut" )
 			.find( "p" )
 				.text( "" )
 				.addClass( "hidden" )
 			.end()
 			.find( ".form-control" )
 				.val( "" );
+	});
+	
+	// Reset animations
+	$authModal.on( "hidden.bs.modal", function() {
+		$authModal
+			.removeClass( "rollOut" )
+			.addClass( "rollIn" );
 	});
 	
 	// Change default behaviour on navbar links
