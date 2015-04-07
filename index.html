@@ -1,43 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
 	<title>Untitled</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap.theme.min.css">
+	<link rel="stylesheet" href="css/animate.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.theme.min.css" />
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-<div class="container">
-	<div class="row page-header border">
-		<div class="row border">
-			<div class="col-md-3 main-logo border">Logo(needs to be in img tag)</div>
-			<div class="col-md-4 col-md-offset-5 border">User info if logged / Login-SignUp if not logged</div>
-		</div>
-		<div class="row border">
-			<div class="col-md-8 border">
-				Website main menu(main | forum | about | team | contact)
-			</div>
-		</div>
-	</div>
 
-	<div class="row main-body border">
-		<section class="col-md-9 forum-categories border">Forum categories when you click on Forum from the main menu</section>
-		<aside class="col-md-3 new-topics border">Small aside element for the newest topics in the forum</aside>
-	</div>
-
-	<div class="row panel-footer border">
-		<div class="row border">
-			<div class="col-md-8 border">An inline forum-tree (shows your path in the forum categories), small size font</div>
-			<div class="col-md-8 border">An inline main menu with a small size font</div>
+<!-- Authentication modal -->
+<div id="authModal" class="modal animated bounceInDown">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+			<!-- Login form -->
+			<form id="login-form" method="get" action="#">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Login</h4>
+					<p class="animated fadeIn text-info text-center hidden"></p>
+				</div>
+				<div class="modal-body">
+					<label class="control-label" for="username-login-input">Username: </label>
+					<input class="form-control" type="text" name="username" id="username-login-input">
+					<label class="control-label" for="password-login-input">Password: </label>
+					<input class="form-control" type="password" name="password" id="password-login-input">
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-default" value="Login" />
+				</div>
+			</form>
+			
+			<!-- Register form -->
+			<form id="signup-form" method="get" action="#">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Sign up</h4>
+					<p class="animated fadeIn text-info text-center hidden"></p>
+				</div>
+				<div class="modal-body">
+					<label class="control-label" for="username-input">Username: </label>
+					<input class="form-control" type="text" name="username" id="username-input">
+					<label class="control-label" for="password-input">Password: </label>
+					<input class="form-control" type="password" name="password" id="password-input">
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" value="Register">
+				</div>
+			</form>
+			
 		</div>
 	</div>
 </div>
 
+<!-- Main nav -->
+<nav class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="./">Index</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="main-navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="./forum.html">Forum</a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tags <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Action</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+						<li class="divider"></li>
+						<li><a href="#">One more separated link</a></li>
+					</ul>
+				</li>
+			</ul>
+			
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Search</button>
+			</form>
+		
+			<ul id="authentication-container" class="nav navbar-nav navbar-right">
+				<li>
+					<h4 class="greetings hidden">Welcome, 
+						<a class="animated fadeIn text-danger user-link" href="./user.html"></a>
+					</h4>
+				</li>
+				<li><a class="animated fadeIn hidden" data-role="login" href="#">Login</a></li>
+				<li><a class="animated fadeIn hidden" data-role="register" href="#">Register</a></li>
+				<li><a class="animated fadeIn hidden" data-role="logout" href="#">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<main class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<header class="jumbotron">
+				<p>Page header</p>
+			</header>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-9">
+		
+			<section class="panel panel-primary">
+				<header class="panel-heading">
+					<h3 class="panel-title">Forum categories when you click on Forum from the main menu</h3>
+				</header>
+				<div class="panel-body">
+					Panel content
+				</div>
+			</section>
+			
+		</div>
+		
+		<div class="col-md-3">
+		
+			<aside class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Small aside element for the newest topics in the forum</h3>
+				</div>
+				<div class="panel-body">
+					Panel content
+				</div>
+			</aside>
+			
+		</div>
+	</div>
+	
+	<div class="well">
+		<footer class="row">
+			
+			<div class="col-md-8">An inline forum-tree (shows your path in the forum categories), small size font</div>
+			<div class="col-md-4">An inline main menu with a small size font</div>
+			
+		</footer>
+	</div>
+</main>
 
 <!-- JS includes -->
 <script src="js/lib/jquery-2.1.3.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
-<script src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+<script src="js/lib/parse-1.4.0.min.js"></script>
 <script src="js/lib/require.js" data-main="js/app.js"></script>
 </body>
 </html>
