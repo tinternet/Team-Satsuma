@@ -1,3 +1,14 @@
+body {
+	background: url("../img/debut_dark.png") repeat;
+}
+
+.jumbotron, .well {
+	background-color: transparent;
+	border: none;
+	color: white;
+	box-shadow: 0 0 10px 5px black;
+}
+
 h4.greetings {
   margin-right: 10px;
   margin-top: 15px;
