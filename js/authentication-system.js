@@ -76,79 +76,72 @@ function register( userName, password ) {
 	);
 }
 
-function init() {
-	updateAuthContainer();
+// Clear all fields on modal close
+$authModal.on( "hide.bs.modal", function( e ) {
+	$authModal
+		.removeClass( "rollIn" )
+		.addClass( "rollOut" )
+		.find( "p" )
+			.text( "" )
+			.addClass( "hidden" )
+		.end()
+		.find( ".form-control" )
+			.val( "" );
+});
 	
-	// Clear all fields on modal close
-	$authModal.on( "hide.bs.modal", function( e ) {
-		$authModal
-			.removeClass( "rollIn" )
-			.addClass( "rollOut" )
-			.find( "p" )
-				.text( "" )
-				.addClass( "hidden" )
-			.end()
-			.find( ".form-control" )
-				.val( "" );
-	});
+// Reset animations
+$authModal.on( "hidden.bs.modal", function() {
+	$authModal
+		.removeClass( "rollOut" )
+		.addClass( "rollIn" );
+});
 	
-	// Reset animations
-	$authModal.on( "hidden.bs.modal", function() {
-		$authModal
-			.removeClass( "rollOut" )
-			.addClass( "rollIn" );
-	});
+// Change default behaviour on navbar links
+$authContainer.on( "click", "a", function( e ) {
+	e.preventDefault();
 	
-	// Change default behaviour on navbar links
-	$authContainer.on( "click", "a", function( e ) {
-		e.preventDefault();
+	var buttonRole = $( e.target ).data( "role" );
+	
+	switch( buttonRole ) {
+		case "login":
+			$signupForm.hide();
+			$loginForm.show();
+			$authModal.modal( "show" );
+			break;
+		case "register":
+			$signupForm.show();
+			$loginForm.hide();
+			$authModal.modal( "show" );
+			break;
+		case "logout":
+			Parse.User.logOut();
+			updateAuthContainer();
+			break;
+		default:
+			// It is just a link
+			window.location = $( e.target ).attr( "href" );
+			break;
+	}
+});
+	
+$signupForm.on( "submit", function( e ) {
+	e.preventDefault();
+	
+	var userName = $( "#username-input" ).val(),
+		password = $( "#password-input" ).val();
 		
-		var buttonRole = $( e.target ).data( "role" );
-		
-		switch( buttonRole ) {
-			case "login":
-				$signupForm.hide();
-				$loginForm.show();
-				$authModal.modal( "show" );
-				break;
-			case "register":
-				$signupForm.show();
-				$loginForm.hide();
-				$authModal.modal( "show" );
-				break;
-			case "logout":
-				Parse.User.logOut();
-				updateAuthContainer();
-				break;
-			default:
-				// It is just a link
-				window.location = $( e.target ).attr( "href" );
-				break;
-		}
-	});
-	
-	$signupForm.on( "submit", function( e ) {
-		e.preventDefault();
-		
-		var userName = $( "#username-input" ).val(),
-			password = $( "#password-input" ).val();
-			
-		register( userName, password );
-	});
-	
-	$loginForm.on( "submit", function( e ) {
-		e.preventDefault();
-		
-		var userName = $( "#username-login-input" ).val(),
-			password = $( "#password-login-input" ).val();
-			
-		login( userName, password );
-	});
-}
+	register( userName, password );
+});
 
-return {
-	/* Binds events related to the login/register system
-		and updates the user link in the main navbar */
-	init: init
-}
+$loginForm.on( "submit", function( e ) {
+	e.preventDefault();
+	
+	var userName = $( "#username-login-input" ).val(),
+		password = $( "#password-login-input" ).val();
+		
+	login( userName, password );
+});
+	
+// Set initial state
+updateAuthContainer();
 });
