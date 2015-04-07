@@ -13,3 +13,7 @@ h4.greetings {
   margin-right: 10px;
   margin-top: 15px;
 }
+
+.navbar {
+	z-index: 1;
+}
