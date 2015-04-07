@@ -12,7 +12,7 @@ requirejs.config({
 
 require( [
 	"controller/login-register-controller",
-	"show-forum-categories"
+	"controller/show-forum-categories"
 	
 	/* Add more *CORE* dependencies to this array...
 		There is no need to include modules for later use!
