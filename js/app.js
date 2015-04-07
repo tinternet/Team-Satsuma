@@ -1,15 +1,14 @@
 "use strict";
 (function( $, requirejs ) {
+	
 requirejs.config({
 	baseUrl: "js/"
 });
 
-Parse.initialize("sEqxBoQA1xw3ifFF8WBFttknx1QKuHHJfiipDPTG", "GRWQnDjiBY79Tt3RKUzjLZnG5hi2fpKapnLu4tFs");
+Parse.initialize( "sEqxBoQA1xw3ifFF8WBFttknx1QKuHHJfiipDPTG", "GRWQnDjiBY79Tt3RKUzjLZnG5hi2fpKapnLu4tFs" );
 
-require( [
-	'./authentication'
-], function( authentication ) {
-	authentication.init();
+require( [ "./authentication-system" ], function( authenticationSystem ) {
+	authenticationSystem.init();
 });
 
 }( $, requirejs ));

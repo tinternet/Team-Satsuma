@@ -1,7 +1,7 @@
 "use strict";
 define(function() {
+
 var
-	
 	$authContainer = $( "#authentication-container" ),
 	$authModal = $( "#authModal" ),
 	$loginForm = $( "#login-form" ),
