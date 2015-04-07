@@ -26,3 +26,7 @@ h4.greetings {
 .main-logo-text {
 	font-family: logoFont;
 }
+
+.panel-body:first-of-type{
+	min-height: 200px;
+}
