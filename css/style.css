@@ -1,3 +1,8 @@
+@font-face {
+	font-family: logoFont;
+	src: url("../fonts/Elronmonospace.ttf");
+}
+
 body {
 	background: url("../img/debut_dark.png") repeat;
 }
@@ -16,4 +21,8 @@ h4.greetings {
 
 .navbar {
 	z-index: 1;
+}
+
+.main-logo-text {
+	font-family: logoFont;
 }
