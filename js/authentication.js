@@ -19,12 +19,12 @@ function updateAuthContainer() {
 				.removeClass( "hidden" )
 			.end()
 			.find( "a" )
-				.not( ".user-link" )
-					.filter( "[data-role='logout']" )
-						.removeClass( "hidden" )
-					.end()
-					.not( "[data-role='logout']" )
-						.addClass( "hidden" );
+			.not( ".user-link" )
+				.filter( "[data-role='logout']" )
+					.removeClass( "hidden" )
+				.end()
+				.not( "[data-role='logout']" )
+					.addClass( "hidden" );
 	} else {
 		$authContainer
 			.find( ".greetings" )
@@ -58,33 +58,32 @@ function login( userName, password ) {
 }
 
 function register( userName, password ) {
-	new Parse
-		.User()
-		.signUp(
-			{
-				"username": userName,
-				"password": password
+	new Parse.User().signUp(
+		{
+			"username": userName,
+			"password": password
+		},
+		{
+			success: function( user ) {
+				$authModal
+					.addClass( "bounceOutUp" )
+					.autoHide( 500 );
+				updateAuthContainer();
 			},
-			{
-				success: function( user ) {
-					$authModal
-						.addClass( "bounceOutUp" )
-						.autoHide( 500 );
-					updateAuthContainer();
-				},
-				error: function( user, error ) {
-					$signupForm
-						.find( "p" )
-						.text( error.message )
-						.removeClass( "hidden" );
-				}
+			error: function( user, error ) {
+				$signupForm
+					.find( "p" )
+					.text( error.message )
+					.removeClass( "hidden" );
 			}
-		);
+		}
+	);
 }
 
 function init() {
 	updateAuthContainer();
 	
+	// Clear all fields on modal close
 	$authModal.on( "hidden.bs.modal", function() {
 		$authModal
 			.removeClass( "bounceOutUp" )
@@ -96,6 +95,7 @@ function init() {
 				.val( "" );
 	});
 	
+	// Change default behaviour on navbar links
 	$authContainer.on( "click", "a", function( e ) {
 		e.preventDefault();
 		
@@ -119,6 +119,7 @@ function init() {
 			default:
 				// It is just a link
 				window.location = $( e.target ).attr( "href" );
+				break;
 		}
 	});
 	
@@ -142,6 +143,8 @@ function init() {
 }
 
 return {
-	init:init
+	/* Binds events related to the login/register system
+		and updates the user link in the main navbar */
+	init: init
 }
 });
