@@ -11,7 +11,7 @@ requirejs.config({
 });
 
 require( [
-	"controller/auth"
+	"controller/login-register-controller"
 	
 	/* Add more *CORE* dependencies to this array...
 		There is no need to include modules for later use!

@@ -1,5 +1,5 @@
 "use strict";
-define( [ "auth" ], function( auth ) {
+define( [ "models/User" ], function( User ) {
 	
 // TODO: This module needs improvements
 // Loose coupling & strong cohesion!
@@ -11,7 +11,7 @@ var
 	$signupForm = $( "#signup-form" );
 	
 function updateAuthContainer() {
-	var user = auth.currentUser;
+	var user = User.getCurrent();
 	
 	if ( user ) {
 		$authContainer
@@ -80,7 +80,7 @@ $authContainer.on( "click", "a", function( e ) {
 			$authModal.modal( "show" );
 			break;
 		case "logout":
-			auth.logout();
+			User.logout();
 			updateAuthContainer();
 			break;
 		default:
@@ -96,15 +96,15 @@ $signupForm.on( "submit", function( e ) {
 	// Main validation logic
 	var formData = $signupForm.serializeArray(),
 		i = 0, len = formData.length,
-		rawUser = {},
+		user = new User( "bypassCheck", "bypassCheck" ), // This needs to be improved
 		data;
 		
 	for( ; i < len; i++ ) {
 		data = formData[ i ];
-		rawUser[ data.name ] = data.value;
+		user[ data.name ] = data.value;
 	}
 	
-	if ( rawUser.password != rawUser.verifyPassword ) {
+	if ( user.password != user.verifyPassword ) {
 		$loginForm
 				.find( "p" )
 				.text( "Passwords does not match!" )
@@ -115,42 +115,39 @@ $signupForm.on( "submit", function( e ) {
 	// Ignore any validations... FOR NOW!
 	// Skip make instance of the user model....
 	// This must be improved!
-	delete rawUser.verifyPassword;
+	delete user.verifyPassword;
 	
-	auth
-		.register( rawUser )
-		.done(function() {
-			$authModal.modal( "hide" );
-			updateAuthContainer();
-		})
-		.fail(function( err ) {
+	user.register(function( err ) {
+		if ( err ) {
 			$loginForm
 				.find( "p" )
 				.text( err.message )
 				.removeClass( "hidden" );
-		})
-	
-	//auth.register( userName, password );
+		} else {
+			$authModal.modal( "hide" );
+			updateAuthContainer();
+		}
+	});
 });
 
 $loginForm.on( "submit", function( e ) {
 	e.preventDefault();
 	
 	var username = $( "#username-login-input" ).val(),
-		password = $( "#password-login-input" ).val();
+		password = $( "#password-login-input" ).val(),
+		user = new User( username, password );
 		
-	auth
-		.login( username, password )
-		.done(function() {
-			$authModal.modal( "hide" );
-			updateAuthContainer();
-		})
-		.fail(function( error ) {
+	user.login(function( err ) {
+		if ( err ) {
 			$loginForm
 				.find( "p" )
 				.text( error.message )
 				.removeClass( "hidden" );
-		});
+		} else {
+			$authModal.modal( "hide" );
+			updateAuthContainer();
+		}
+	});
 });
 	
 // Set initial state
