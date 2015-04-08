@@ -1,5 +1,5 @@
 "use strict";
-define( [ "models/User" ], function( User ) {
+define( [ "models/User", "models/Exceptions" ], function( User, Exceptions ) {
 	
 // TODO: This module needs improvements
 // Loose coupling & strong cohesion!
@@ -103,6 +103,9 @@ $signupForm.on( "submit", function( e ) {
 		data = formData[ i ];
 		user[ data.name ] = data.value;
 	}
+
+	//needs further improvement with try -> catch blocks
+	user = verifyRegistrationsFields(user);
 	
 	if ( user.password != user.verifyPassword ) {
 		$loginForm
@@ -128,6 +131,34 @@ $signupForm.on( "submit", function( e ) {
 			updateAuthContainer();
 		}
 	});
+
+	//TODO - needs improvment - to color in red the field where it is empty
+	function verifyRegistrationsFields(userData) {
+		var firstName = trim(userData.firstName),
+			lastName = trim(userData.lastName),
+			username = trim(userData.username),
+			password = trim(userData.password),
+			verifyPassword = trim(userData.verifyPassword);
+
+		if (firstName == '' ||
+			lastName == '' ||
+			username == '' ||
+			password == '' ||
+			verifyPassword == '') {
+			throw new Exceptions.emptyFieldException();
+		} else if (password != verifyPassword) {
+
+			throw new Exceptions.passwordsDontMatchException();
+
+		} else {
+
+			return userData;
+		}
+
+		function trim (str) {
+			return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+		}
+	}
 });
 
 $loginForm.on( "submit", function( e ) {
