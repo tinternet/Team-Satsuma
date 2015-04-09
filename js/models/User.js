@@ -5,13 +5,29 @@ var
 	SIGNUP_URL = "https://api.parse.com/1/users",
 	LOGIN_URL = "https://api.parse.com/1/login";
 
+	
+// Examples for user constructor
+// new User( { username: "username", password: "password" } )
+// new User( "username", "password" );
 function User( username, password ) {
-	if ( !username || !password ) {
+	if ( !arguments.length ) {
+		throw Exceptions.usernameAndPasswordRequiredException();
+	} else if ( typeof arguments[ 0 ] === "object" ) {
+		// We have raw object -> copy to this
+		for ( var property in arguments[ 0 ] ) {
+			this[ property ] = arguments[ 0 ][ property ];
+		}
+		
+		// We don't wanna send useless and dangerous info to the server!
+		delete this[ "verifyPassword" ];
+	} else {
+		this.username = arguments[ 0 ];
+		this.password = arguments[ 1 ];
+	}
+	
+	if ( !this.username || !this.password ) {
 		throw Exceptions.usernameAndPasswordRequiredException();
 	}
-
-	this.username = username;
-	this.password = password;
 }
 
 function login( callback ) {

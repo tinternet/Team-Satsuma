@@ -11,7 +11,7 @@ requirejs.config({
 });
 
 require( [
-	"controller/login-register-controller",
+	"./userPanel",
 	"controller/show-forum-categories"
 	
 	/* Add more *CORE* dependencies to this array...
