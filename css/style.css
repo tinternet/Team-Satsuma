@@ -14,6 +14,15 @@ body {
 	box-shadow: 0 0 10px 5px black;
 }
 
+.text-info {
+	padding: 0;
+	margin-bottom: 20px;
+}
+
+.text-info img{
+	margin-left: -60px;
+}
+
 h4.greetings {
   margin-right: 10px;
   margin-top: 15px;
@@ -27,41 +36,11 @@ h4.greetings {
 	font-family: logoFont;
 }
 
-.panel-body:first-of-type{
-	min-height: 100px;
+.panel-primary  > div{
+	padding: 0;
 }
 
-.show-categories .nav {
-	margin-bottom: 20px;
+.panel-primary {
+	background-color: transparent;
 }
-
-.show-categories > ul li a{
-	margin-left: 45px;
-}
-
-.show-categories > ul > li:nth-of-type(1) {
-	background-image: url('../img/programming.jpg');
-	background-repeat: no-repeat;
-}
-
-.show-categories > ul > li > ul {
-	margin-left: 50px;
-	display: none;
-}
-
-.show-categories > ul li > ul li a {
-	margin-left: 30px;
-}
-
-.show-categories > ul  > li:nth-of-type(1) > ul li:nth-of-type(1) {
-	background-image: url('../img/java.png');
-	background-repeat: no-repeat;
-}
-
-.show-categories > ul  > li:nth-of-type(1) > ul li:nth-of-type(2) {
-	background-image: url('../img/javascript.png');
-	background-repeat: no-repeat;
-}
-
-
 
