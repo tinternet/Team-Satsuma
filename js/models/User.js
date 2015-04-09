@@ -1,5 +1,5 @@
 "use strict";
-define( [ "parseDotComHeader" ], function( parseHeader ) {
+define( [ "parseDotComHeader", "models/Exceptions" ], function( parseHeader, Exceptions ) {
 
 var
 	SIGNUP_URL = "https://api.parse.com/1/users",
@@ -7,9 +7,9 @@ var
 
 function User( username, password ) {
 	if ( !username || !password ) {
-		throw Error( "Username and password are required!" );
+		throw Exceptions.usernameAndPasswordRequiredException();
 	}
-	
+
 	this.username = username;
 	this.password = password;
 }
@@ -36,7 +36,7 @@ function login( callback ) {
 		callback();
 	})
 	.fail(function() {
-		callback( Error( "Invalid username/password!" ) );
+		callback( Exceptions.invalidUsernameOrPasswordException() );
 	});
 }
 
@@ -54,7 +54,7 @@ function register( callback ) {
 		this.login( callback );
 	})
 	.fail(function() {
-		callback( Error( "Username already taken!" ) );
+		callback( Exceptions.usernameAlreadyTakenException() );
 	});
 }
 
@@ -70,11 +70,11 @@ User.getCurrent = function() {
 	} else {
 		return JSON.parse( localStorage.user );
 	}
-}
+};
 
 User.logout = function() {
 	delete localStorage.user;
-}
+};
 
 return User;
 });

@@ -1,21 +1,25 @@
 "use strict";
-define([], function() {
-    var exceptions = exceptions || {};
+define({
 
-    (function Exceptions(excep) {
-        //add custom exceptions here
-        var emptyFieldException = new TypeError('The input field is empty.'),
-            passwordsDontMatchException = new TypeError('The passwords are not identical.');
+    //put custom exceptions here
+    emptyFieldException: function( args ) {
+        return TypeError( "The input field is empty." );
+    },
 
+    passwordsDontMatchException: function( args ) {
+        return TypeError( "The passwords are not identical." );
+    },
 
-        excep.emptyFieldException = function() {
-            return emptyFieldException;
-        };
+    usernameAndPasswordRequiredException: function( args ) {
+        return TypeError("Username and password are required!");
+    },
 
-        excep.passwordsDontMatchException = function() {
-            return passwordsDontMatchException;
-        };
-    }(exceptions));
+    usernameAlreadyTakenException: function( args ) {
+        return TypeError("Username has already been taken!");
+    },
 
-    return exceptions;
+    invalidUsernameOrPasswordException: function( args ) {
+        return TypeError("Invalid username or password!");
+    }
+
 });

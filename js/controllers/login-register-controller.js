@@ -78,6 +78,12 @@ $authContainer.on( "click", "a", function( e ) {
 			$signupForm.show();
 			$loginForm.hide();
 			$authModal.modal( "show" );
+			$('.register-input-container')
+				.removeClass('has-error')
+				.removeClass('has-success');
+			$signupForm
+				.find('input')
+				.attr('placeholder', '');
 			break;
 		case "logout":
 			User.logout();
@@ -97,67 +103,73 @@ $signupForm.on( "submit", function( e ) {
 	var formData = $signupForm.serializeArray(),
 		i = 0, len = formData.length,
 		user = new User( "bypassCheck", "bypassCheck" ), // This needs to be improved
-		data;
+		data,
+		elementName;
 		
 	for( ; i < len; i++ ) {
 		data = formData[ i ];
-		user[ data.name ] = data.value;
+		user[ data.name ] = trim(data.value);
+		elementName = 'input[name=' + data.name + ']';
+
+		if(user[ data.name ] == '') {
+			$(elementName)
+				.attr('placeholder', 'Field is required!')
+				.parent()
+				.addClass('has-error');
+
+			throw Exceptions.emptyFieldException();
+		} else {
+			$(elementName)
+				.parent()
+				.removeClass('has-error')
+				.addClass('has-success');
+
+			throw Exceptions.passwordsDontMatchException();
+		}
 	}
 
-	//needs further improvement with try -> catch blocks
-	user = verifyRegistrationsFields(user);
-	
 	if ( user.password != user.verifyPassword ) {
-		$loginForm
-				.find( "p" )
-				.text( "Passwords does not match!" )
-				.removeClass( "hidden" );
+		$('#verify-password-input')
+			.val('')
+			.attr('placeholder', 'Passwords does not match')
+			.parent()
+			.addClass('has-error');
+
+		//$loginForm
+		//		.find( "p" )
+		//		.text( "Passwords does not match!" )
+		//		.removeClass( "hidden" );
 		return;
+	} else {
+		$('#verify-password-input')
+			.parent()
+			.removeClass('has-error')
+			.addClass('has-success');
 	}
 	
 	// Ignore any validations... FOR NOW!
 	// Skip make instance of the user model....
 	// This must be improved!
-	delete user.verifyPassword;
-	
-	user.register(function( err ) {
-		if ( err ) {
-			$loginForm
-				.find( "p" )
-				.text( err.message )
-				.removeClass( "hidden" );
-		} else {
-			$authModal.modal( "hide" );
-			updateAuthContainer();
-		}
-	});
+	//delete user.verifyPassword;
 
-	//TODO - needs improvment - to color in red the field where it is empty
-	function verifyRegistrationsFields(userData) {
-		var firstName = trim(userData.firstName),
-			lastName = trim(userData.lastName),
-			username = trim(userData.username),
-			password = trim(userData.password),
-			verifyPassword = trim(userData.verifyPassword);
+	if ( user.firstName && user.lastName && user.username &&
+		(user.password == user.verifyPassword) ) {
 
-		if (firstName == '' ||
-			lastName == '' ||
-			username == '' ||
-			password == '' ||
-			verifyPassword == '') {
-			throw new Exceptions.emptyFieldException();
-		} else if (password != verifyPassword) {
+		user.register(function( err ) {
+			if ( err ) {
+				$loginForm
+					.find( "p" )
+					.text( err.message )
+					.removeClass( "hidden" );
+			} else {
+				$authModal.modal( "hide" );
+				updateAuthContainer();
+			}
+		});
+	}
 
-			throw new Exceptions.passwordsDontMatchException();
-
-		} else {
-
-			return userData;
-		}
-
-		function trim (str) {
-			return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-		}
+	function trim (str) {
+		return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 	}
 });
 
