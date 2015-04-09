@@ -119,8 +119,9 @@ $signupForm.on( "submit", function( e ) {
 		user[ data.name ] = trim(data.value);
 		elementName = 'input[name=' + data.name + ']';
 
-		if(user[ data.name ] == '') {
+		if( user[ data.name ] == '' ) {
 			$(elementName)
+				.val('')
 				.attr('placeholder', 'Field is required!')
 				.parent()
 				.addClass('has-error');
