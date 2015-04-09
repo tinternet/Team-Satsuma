@@ -5,6 +5,13 @@ define( [
 ], function( User ) {
 	
 var $loginModal = $( "#login-modal" );
+
+function showError( err ) {
+	$loginModal
+		.find( "p" )
+		.text( err.message )
+		.removeClass( "hidden" );
+}
 	
 $( "#login-form" ).on( "submit", function( e ) {
 	e.preventDefault();
@@ -28,12 +35,5 @@ $( "#login-form" ).on( "submit", function( e ) {
 			$( "#navbar-user-panel" ).trigger( "update" );
 		}
 	});
-	
-	function showError( err ) {
-		$loginModal
-			.find( "p" )
-			.text( err.message )
-			.removeClass( "hidden" );
-	}
 });
 });

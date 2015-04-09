@@ -12,6 +12,7 @@ requirejs.config({
 
 require( [
 	"./userPanel",
+	"./search",
 	"controller/show-forum-categories"
 	
 	/* Add more *CORE* dependencies to this array...

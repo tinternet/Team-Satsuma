@@ -4,13 +4,11 @@ define( [
 	"./modalReset",
 ], function( User ) {
 	
-var
-	REQUIRED_FIELDS_COUNT = 5,
-	$registerModal = $( "#register-modal" );
+var REQUIRED_FIELDS_COUNT = 5;
 
 $( "#register-form" )
-
 	// Fired when input field is unfocused
+	// This handler informs the user for invalid/valid field values
 	.on( "blur", "input", function( e ) {
 		var $input = $( e.target ),
 			inputValue = $input.val().trim();
@@ -53,19 +51,20 @@ $( "#register-form" )
 		}
 		
 		if ( validFieldsCount !== REQUIRED_FIELDS_COUNT ) {
-			$( "#register-form input" ).trigger( "blur" );
+			// Simulate blur event to show the user that some fields has invalid values
+			$( "#register-form input" ).blur();
 			return;
 		}
 		
 		new User( rawUser )
 			.register(function( err ) {
 				if ( err ) {
-					$registerModal
+					$( "#register-modal" )
 						.find( "p" )
 						.text( err.message )
 						.removeClass( "hidden" );
 				} else {
-					$registerModal.modal( "hide" );
+					$( "#register-modal" ).modal( "hide" );
 					$( "#navbar-user-panel" ).trigger( "update" );
 				}
 			});
