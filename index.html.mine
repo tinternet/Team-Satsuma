@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Let's talk about...</title>
+	<link rel="stylesheet" href="css/animate.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.theme.min.css" />
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- Login modal -->
+<div id="login-modal" class="modal fade animated rollIn">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="login-form" method="get" action="#">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Login</h4>
+					<p class="animated fadeIn text-info text-center hidden"></p>
+				</div>
+				<div class="modal-body login-input-container">
+					<div class="login-input-container">
+						<label class="control-label" for="username-login-input">Username: </label>
+						<input class="form-control" type="text" name="username" id="username-login-input">
+					</div>
+					<div class="login-input-container">
+						<label class="control-label" for="password-login-input">Password: </label>
+						<input class="form-control" type="password" name="password" id="password-login-input">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-default" value="Login" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Registration modal -->
+<div id="register-modal" class="modal fade animated rollIn">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="register-form" method="post" action="#">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Sign up</h4>
+					<p class="animated fadeIn text-info text-center hidden"></p>
+				</div>
+				<div class="modal-body">
+					<div class="register-input-container">
+						<label class="control-label" for="first-name-input">First name: </label>
+						<input class="form-control" type="text" name="firstName" id="first-name-input" autofocus>
+					</div>
+					<div class="register-input-container">
+						<label class="control-label" for="last-name-input">Last name: </label>
+						<input class="form-control" type="text" name="lastName" id="last-name-input">
+					</div>
+					<div class="register-input-container">
+						<label class="control-label" for="username-input">Username: </label>
+						<input class="form-control" type="text" name="username" id="username-input">
+					</div>
+					<div class="register-input-container">
+						<label class="control-label" for="password-input">Password: </label>
+						<input class="form-control" type="password" name="password" id="password-input">
+					</div>
+					<div class="register-input-container">
+						<label class="control-label" for="verify-password-input">Repeat password: </label>
+						<input class="form-control" type="password" name="verifyPassword" id="verify-password-input">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" value="Register">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Main nav -->
+<nav class="navbar navbar-default animated fadeInDown">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand main-logo-text" href="./">{ Let's talk about... }</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="main-navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="dropdown show-forum-categories">
+					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="./forum.html">Forum<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">JavaScript</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Java</a></li>
+							<li class="divider"></li>
+							<li><a href="#">PHP</a></li>
+							<li class="divider"></li>
+							<li><a href="#">C#</a></li>
+						</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tags <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Action</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+						<li class="divider"></li>
+						<li><a href="#">One more separated link</a></li>
+					</ul>
+				</li>
+			</ul>
+			
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Search</button>
+			</form>
+		
+			<ul id="navbar-user-panel" class="nav navbar-nav navbar-right">
+				<li>
+					<h4 class="greetings hidden">Welcome, 
+						<a class="animated fadeIn text-danger user-link" href="./user.html"></a>
+					</h4>
+				</li>
+				<li><a class="animated fadeIn hidden" data-role="login" href="#">Login</a></li>
+				<li><a class="animated fadeIn hidden" data-role="register" href="#">Register</a></li>
+				<li><a class="animated fadeIn hidden" data-role="logout" href="#">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<!-- Main website content. This should be different in all pages -->
+<main class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<header class="jumbotron text-info">
+				<img src="img/banner-jquery.jpg" alt="Let's talk about" height="195" width="1140">
+				<!-- Make changes to the header at this level  -->				
+			</header>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-9">
+		
+			<section class="panel panel-primary">
+				<header class="panel-heading">
+					<h3 class="panel-title">JavaScript - opened category here</h3>
+				</header>
+				<div class="panel-body">
+					<img src="img/lets-talk-panel-body.png" alt="Let's talk about" height="195" width="846">
+					<!-- Add more stuff here -->
+				</div>
+			</section>
+			
+		</div>
+		
+		<div class="col-md-3">
+		
+			<aside class="panel panel-info  animated flipInY">
+				<div class="panel-heading">
+					<h3 class="panel-title">Recent topics:</h3>
+				</div>
+				<div class="panel-body">
+					<!-- Add more stuff here -->
+					Panel content
+				</div>
+			</aside>
+			
+		</div>
+	</div>
+	
+	<div class="well">
+		<footer class="row">
+			
+			<div class="col-md-8">
+				<!-- Add more stuff here -->
+				An inline forum-tree (shows your path in the forum categories), small size font
+			</div>
+			
+			<div class="col-md-4">
+				<!-- Add more stuff here -->
+				An inline main menu with a small size font
+			</div>
+			
+		</footer>
+	</div>
+</main>
+
+<!-- JS includes -->
+<script src="js/lib/jquery-2.1.3.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/lib/require.js" data-main="js/app.js"></script>
+</body>
+</html>
