@@ -67,6 +67,15 @@ $authContainer.on( "click", "a", function( e ) {
 	e.preventDefault();
 	
 	var buttonRole = $( e.target ).data( "role" );
+
+	//these 2 clear the modal forms from any placeholders and red/green borders
+	$('.register-input-container')
+		.removeClass('has-error')
+		.removeClass('has-success');
+
+	$signupForm
+		.find('input')
+		.attr('placeholder', '');
 	
 	switch( buttonRole ) {
 		case "login":
@@ -78,12 +87,6 @@ $authContainer.on( "click", "a", function( e ) {
 			$signupForm.show();
 			$loginForm.hide();
 			$authModal.modal( "show" );
-			$('.register-input-container')
-				.removeClass('has-error')
-				.removeClass('has-success');
-			$signupForm
-				.find('input')
-				.attr('placeholder', '');
 			break;
 		case "logout":
 			User.logout();
