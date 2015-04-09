@@ -116,15 +116,11 @@ $signupForm.on( "submit", function( e ) {
 				.attr('placeholder', 'Field is required!')
 				.parent()
 				.addClass('has-error');
-
-			throw Exceptions.emptyFieldException();
 		} else {
 			$(elementName)
 				.parent()
 				.removeClass('has-error')
 				.addClass('has-success');
-
-			throw Exceptions.passwordsDontMatchException();
 		}
 	}
 
