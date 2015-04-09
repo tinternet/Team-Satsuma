@@ -13,12 +13,10 @@
 </head>
 <body>
 
-<!-- Authentication modal -->
-<div id="authModal" class="modal fade animated rollIn">
+<!-- Login modal -->
+<div id="login-modal" class="modal fade animated rollIn">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			
-			<!-- Login form -->
 			<form id="login-form" method="get" action="#">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -39,9 +37,15 @@
 					<input type="submit" class="btn btn-default" value="Login" />
 				</div>
 			</form>
-			
-			<!-- Register form -->
-			<form id="signup-form" method="get" action="#">
+		</div>
+	</div>
+</div>
+
+<!-- Registration modal -->
+<div id="register-modal" class="modal fade animated rollIn">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="register-form" method="post" action="#">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h4 class="modal-title">Sign up</h4>
@@ -50,7 +54,7 @@
 				<div class="modal-body">
 					<div class="register-input-container">
 						<label class="control-label" for="first-name-input">First name: </label>
-						<input class="form-control" type="text" name="firstName" id="first-name-input">
+						<input class="form-control" type="text" name="firstName" id="first-name-input" autofocus>
 					</div>
 					<div class="register-input-container">
 						<label class="control-label" for="last-name-input">Last name: </label>
@@ -73,7 +77,6 @@
 					<input type="submit" class="btn btn-primary" value="Register">
 				</div>
 			</form>
-			
 		</div>
 	</div>
 </div>
@@ -115,7 +118,7 @@
 				<button type="submit" class="btn btn-default">Search</button>
 			</form>
 		
-			<ul id="authentication-container" class="nav navbar-nav navbar-right">
+			<ul id="navbar-user-panel" class="nav navbar-nav navbar-right">
 				<li>
 					<h4 class="greetings hidden">Welcome, 
 						<a class="animated fadeIn text-danger user-link" href="./user.html"></a>
