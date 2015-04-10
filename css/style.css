@@ -7,6 +7,10 @@ body {
 	background: url("../img/debut_dark.png") repeat;
 }
 
+#main-header {
+    margin-bottom: 20px;
+}
+
 .jumbotron, .well {
 	background-color: transparent;
 	border: none;
