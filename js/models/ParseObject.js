@@ -43,12 +43,13 @@ function ParseObject( serverResponse ) {
 	}
 }
 
-function save() {
+function save( sessionToken ) {
 	var url = URL + this.constructor.name,
 		deferred = $.Deferred(),
 		data = {},
-		self = this;
-		
+		self = this,
+		headers = Object.create( parseHeader );
+	
 	Object
 		.keys( this )
 		.forEach(function( key ) {
@@ -60,12 +61,16 @@ function save() {
 				data[ key ] = self[ key ];
 			}
 		});
+		
+	if ( sessionToken ) {
+		headers[ "X-Parse-Session-Token" ] = sessionToken;
+	}
 
 	$.ajax({
 		method: this._existsOnServer ? "PUT" : "POST",
 		url: this._existsOnServer ? url + "/" + this.objectId : url,
 		data: JSON.stringify( data ),
-		headers: parseHeader,
+		headers: headers,
 		context: this
 	})
 	.done(function( response ) {
@@ -95,9 +100,22 @@ function remove() {
 	return deferred.promise();
 }
 
+function toPointer() {
+	if ( !this._existsOnServer ) {
+		throw Error( "This object does not exist in the database! Please save it first!" );
+	}
+	
+	return {
+		"__type": "Pointer",
+		"className": this.constructor.name,
+		"objectId": this.objectId
+	};
+}
+
 ParseObject.prototype = {
 	save: save,
 	remove: remove,
+	toPointer: toPointer,
 	constructor: ParseObject
 }
 
