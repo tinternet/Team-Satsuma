@@ -1,11 +1,46 @@
 "use strict";
-define( [ "parseDotComHeader" ], function( parseHeader ) {
+define( [
+	"models/ParseObject",
+	"models/User",
+	"models/Question",
+	"models/Exceptions",
+	"extends"
+],
+	function( parseObject, User, Question, Exception ) {
 
-	function Answer(text, user) {
-		this.text = text;
-		this.user = user;
-		this.date = new Date();
-	}
+		function Answer( content, author, question ) {
+			ParseObject.call( this, arguments[0] );
 
-	return Answer;
-}
+			if ( typeof content === "string" && author instanceof User ) {
+				if ( content.isEmpty() ) {
+					throw Exception.emptyFieldException( "The answer content is empty!" );
+				} else {
+					this.content = content;
+				}
+
+				this.author = author;
+				this.question = question;
+			}
+		}
+
+		Answer.extends( ParseObject );
+
+		Answer.prototype.save = function( sessionToken ) {
+			var question = this.question,
+				deferred = $.Deferred();
+
+			this.question = this.question.toPointer();
+
+			ParseObject
+				.prototype
+				.save
+				.call( this, sessionToken )
+				.done( function() {
+					this.question = question;
+					deferred.resolveWith( this );
+				})
+				.fail( deferred.reject );
+
+			return deferred.promise();
+		};
+});

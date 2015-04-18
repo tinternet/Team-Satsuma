@@ -3,11 +3,11 @@ define({
 
     //put custom exceptions here
     emptyFieldException: function( args ) {
-        return TypeError( "The input field is empty." );
+        return TypeError( "The field is empty." );
     },
 
     passwordsDontMatchException: function( args ) {
-        return TypeError( "The passwords are not identical." );
+        return TypeError( args[0] );
     },
 
     usernameAndPasswordRequiredException: function( args ) {
@@ -21,5 +21,4 @@ define({
     invalidUsernameOrPasswordException: function( args ) {
         return TypeError("Invalid username or password!");
     }
-
 });
