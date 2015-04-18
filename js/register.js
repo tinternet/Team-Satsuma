@@ -1,7 +1,7 @@
 "use strict";
 define( [
 	"./models/User",
-	"./modalReset",
+	"./modalReset"
 ], function( User ) {
 	
 var REQUIRED_FIELDS_COUNT = 5;
