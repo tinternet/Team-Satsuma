@@ -4,7 +4,7 @@ define( [
 	"models/User",
 	"models/Answer",
 	"extends"
-], function( ParseObject, User ) {
+], function( ParseObject, User, Answer ) {
 
 function Question( title, content, author ) {
 	ParseObject.call( this, arguments[ 0 ] );
