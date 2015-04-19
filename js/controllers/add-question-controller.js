@@ -20,16 +20,6 @@ define( [
             $panelBody = $( "<div class='panel-body'>"),
             $questionFields = $( "<div>" );
 
-    //TODO - Just for testing purpose at the moment - needs to be written properly with more fields, etc...
-        $questionFields
-            .append( "<input type='text' id='question-title'>" )
-            .append( "<textarea id='question-content'>" )
-            .append( "<button id='question-submit'>" );
-
-        $questionFields.appendTo( $panelBody );
-        $panelHeader.appendTo( $panel );
-        $panelBody.appendTo( $panel );
-
     function generateAddQuestionHtml() {
         var categoryMenu =
             "<div class='add-question-container'>Select a category" +
@@ -53,6 +43,10 @@ define( [
                     .append( "<textarea class='form-control' name='questionContent' id='question-content-input'>" )
             )
             .append( "<input type='button' id='question-add-button' value='Submit Question'>" );
+
+        $questionFields.appendTo( $panelBody );
+        $panelHeader.appendTo( $panel );
+        $panelBody.appendTo( $panel );
     }
 
 
