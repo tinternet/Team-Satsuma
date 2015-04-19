@@ -1,4 +1,4 @@
-// The idea is to generate a new html field with fields to add a neq question
+// The idea is to generate a new html element with fields to add a new question
 // and to append it in the index.html
 
 "use strict";
@@ -39,7 +39,7 @@ define( [
             )
             .append(
                 $("<div class='add-question-container'>")
-                    .append( $( "<label for='question-content-input'>" ).text( "Question title" ) )
+                    .append( "<label for='question-content-input'>" )
                     .append( "<textarea class='form-control' name='questionContent' id='question-content-input'>" )
             )
             .append( "<input type='button' id='question-add-button' value='Submit Question'>" );
@@ -50,7 +50,7 @@ define( [
     }
 
 
-    $( "#question-submit").click( function( ev ) {
+    $( "#question-add-button").click( function( ev ) {
         var
             title = $( "#question-title").val(),
             content = $( "#question-content").val(),
