@@ -6,11 +6,12 @@ define( [
 	"extends"
 ], function( ParseObject, User, Answer ) {
 
-function Question( title, content, author ) {
+function Question( category, title, content, author ) {
 	ParseObject.call( this, arguments[ 0 ] );
 	
 	if ( typeof title === "string" && typeof content === "string" &&
-			author instanceof User ) {
+			typeof category === "string" && author instanceof User ) {
+		this.category = category;
 		this.title = title;
 		this.content = content;
 		this.author = author;

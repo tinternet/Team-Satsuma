@@ -9,7 +9,6 @@ define( [
     "models/Exceptions",
     "extends"
 ], function( ParseObject, User, Question, Exception ) {
-    //TODO - needs data validation
         var
             user = User.getCurrent(),
             $panel = $( ".panel-primary" ),
@@ -31,14 +30,46 @@ define( [
         $panelHeader.appendTo( $panel );
         $panelBody.appendTo( $panel );
 
+    function generateAddQuestionHtml() {
+        var categoryMenu =
+            "<div class='add-question-container'>Select a category" +
+            "<select id='add-question-forum-categories'>" +
+            "<option value='JavaScript'>JavaScript</option>" +
+            "<option value='Java'>Java</option>" +
+            "<option value='PHP'>PHP</option>" +
+            "<option value='C#'>C#</option>" +
+            "</select></div>";
+
+        $questionFields
+            .append( categoryMenu )
+            .append(
+                $("<div class='add-question-container'>")
+                    .append( $( "<label for='question-id-input'>" ).text( "Question title" ) )
+                    .append( "<input class='form-control' type='text' name='questionId' id='question-id-input'>" )
+            )
+            .append(
+                $("<div class='add-question-container'>")
+                    .append( $( "<label for='question-content-input'>" ).text( "Question title" ) )
+                    .append( "<textarea class='form-control' name='questionContent' id='question-content-input'>" )
+            )
+            .append( "<input type='button' id='question-add-button' value='Submit Question'>" );
+    }
+
+
     $( "#question-submit").click( function( ev ) {
         var
             title = $( "#question-title").val(),
             content = $( "#question-content").val(),
-            author = user.objectId,
+            category = $( "#add-question-forum-categories option:selected").val(),
             question;
 
-        question = new Question( title, content, author );
-        question.save( user ); //not sure if user is the correct thing to pu inside save()
+        if ( title.isEmpty() || content.isEmpty() ) {
+            throw Exception.emptyFieldException( "The question title or content is empty!" );
+        } else {
+            question = new Question( category, title, content, user );
+            question.save( user ); //not sure if user is the correct thing to pu inside save()
+        }
+
+        //TODO - loads the category list in the forum after question is saved
     })
 } );
