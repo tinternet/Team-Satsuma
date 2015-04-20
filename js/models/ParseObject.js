@@ -56,7 +56,7 @@ function save() {
 		
 	if ( currentUser == null ) {
 		deferred.rejectWith( this, "Cannot save object as anonymous user!" );
-		return;
+		return deferred.promise();
 	}
 	
 	if ( !this._existsOnServer ) {
