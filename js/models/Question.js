@@ -20,34 +20,12 @@ function Question( category, title, content, author ) {
 
 Question.extends( ParseObject );
 
-Question.prototype.save = function( sessionToken ) {
-	var author = this.author,
-		deferred = $.Deferred();
-	
-	// Change the author property to pointer
-	// We want to send this property as parse.com pointer type
-	this.author = this.author.toPointer();
-	
-	ParseObject
-		.prototype
-		.save
-		.call( this, sessionToken )
-		.done(function() {
-			// Bring back the model instance
-			this.author = author;
-			deferred.resolveWith( this );
-		})
-		.fail( deferred.reject );
-		
-	return deferred.promise();
-};
-
 Question.prototype.getAnswers = function() {
 	var queryData = {
 		"question": this.toPointer()
 	};
 	
-	return Answer.loadAll( "where=" + JSON.stringify( queryData ) );
+	return Answer.loadAll( "include=author&where=" + JSON.stringify( queryData ) );
 };
 
 });

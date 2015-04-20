@@ -12,7 +12,10 @@
 	# See line 65 and 66 for more info about the instance sync state
 */
 "use strict";
-define( [ "parseDotComHeader" ], function( parseHeader ) {
+define( [
+	"parseDotComHeader",
+	"models/User"
+], function( parseHeader, User ) {
 
 var URL = "https://api.parse.com/1/classes/";
 	
@@ -43,12 +46,27 @@ function ParseObject( serverResponse ) {
 	}
 }
 
-function save( sessionToken ) {
+function save() {
 	var url = URL + this.constructor.name,
 		deferred = $.Deferred(),
 		data = {},
 		self = this,
-		headers = Object.create( parseHeader );
+		headers = Object.create( parseHeader ),
+		currentUser = User.getCurrent();
+		
+	if ( currentUser == null ) {
+		deferred.rejectWith( this, "Cannot save object as anonymous user!" );
+		return;
+	}
+	
+	if ( !this._existsOnServer ) {
+		data.ACL = {
+			currentUser.objectId: { "read": true, "write": true },
+			"*": { "read": true }
+		};
+	}
+	
+	headers[ "X-Parse-Session-Token" ] = currentUser.sessionToken;
 	
 	Object
 		.keys( this )
@@ -58,13 +76,15 @@ function save( sessionToken ) {
 					key !== "objectId" &&
 					key !== "updatedAt" &&
 					key !== "createdAt" ) {
-				data[ key ] = self[ key ];
+				
+				// We would want to send parse objects as pointers
+				if ( self[ key ] instanceof ParseObject ) {
+					data[ key ] = self[ key ].toPointer();
+				} else {
+					data[ key ] = self[ key ];
+				}
 			}
 		});
-		
-	if ( sessionToken ) {
-		headers[ "X-Parse-Session-Token" ] = sessionToken;
-	}
 
 	$.ajax({
 		method: this._existsOnServer ? "PUT" : "POST",

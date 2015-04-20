@@ -5,42 +5,22 @@ define( [
 	"models/Question",
 	"models/Exceptions",
 	"extends"
-],
-	function( parseObject, User, Question, Exception ) {
+], function( parseObject, User, Question, Exception ) {
 
-		function Answer( content, author, question ) {
-			ParseObject.call( this, arguments[0] );
+function Answer( content, author, question ) {
+	ParseObject.call( this, arguments[0] );
 
-			if ( typeof content === "string" && author instanceof User ) {
-				if ( content.isEmpty() ) {
-					throw Exception.emptyFieldException( "The answer content is empty!" );
-				} else {
-					this.content = content;
-				}
-
-				this.author = author;
-				this.question = question;
-			}
+	if ( typeof content === "string" && author instanceof User ) {
+		if ( content.isEmpty() ) {
+			throw Exception.emptyFieldException( "The answer content is empty!" );
+		} else {
+			this.content = content;
 		}
 
-		Answer.extends( ParseObject );
+		this.author = author;
+		this.question = question;
+	}
+}
 
-		Answer.prototype.save = function( sessionToken ) {
-			var question = this.question,
-				deferred = $.Deferred();
-
-			this.question = this.question.toPointer();
-
-			ParseObject
-				.prototype
-				.save
-				.call( this, sessionToken )
-				.done( function() {
-					this.question = question;
-					deferred.resolveWith( this );
-				})
-				.fail( deferred.reject );
-
-			return deferred.promise();
-		};
+Answer.extends( ParseObject );
 });
