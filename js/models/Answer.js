@@ -23,4 +23,7 @@ function Answer( content, author, question ) {
 }
 
 Answer.extends( ParseObject );
+
+return Answer;
+
 });

@@ -47,4 +47,6 @@ Question.prototype.getAnswers = function() {
 	return Answer.loadAll( "include=author&where=" + JSON.stringify( queryData ) );
 };
 
+return Question;
+
 });
