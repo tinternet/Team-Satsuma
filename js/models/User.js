@@ -84,7 +84,7 @@ User.getCurrent = function() {
 	}
 };
 
-User.logout = function() {
+User.logout = User.prototype.logout = function() {
 	delete localStorage.user;
 	
 	// TODO: Make ajax request to LOGOUT_URL to delete the server session
