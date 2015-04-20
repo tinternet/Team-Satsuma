@@ -54,6 +54,9 @@ function save() {
 		headers = Object.create( parseHeader ),
 		currentUser = User.getCurrent();
 		
+		
+	/* Skip ACL stuff for now
+		
 	if ( currentUser == null ) {
 		deferred.rejectWith( this, "Cannot save object as anonymous user!" );
 		return deferred.promise();
@@ -67,6 +70,8 @@ function save() {
 	}
 	
 	headers[ "X-Parse-Session-Token" ] = currentUser.sessionToken;
+	
+	*/
 	
 	Object
 		.keys( this )
