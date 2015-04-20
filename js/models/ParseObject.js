@@ -38,10 +38,7 @@ function ParseObject( serverResponse ) {
 		}
 	});
 	
-	if ( !this.updatedAt ) {
-		this.updatedAt = this.createdAt;
-	}
-	
+	this.updatedAt = this.updatedAt || this.createdAt;
 	this._existsOnServer = true;
 }
 
