@@ -74,9 +74,22 @@ function register( callback ) {
 	});
 }
 
+function toPointer() {
+	if ( !this.objectId ) {
+		throw Error( "The user doesn`t exiests on the server! Cannot convert to pointer!" );
+	}
+	
+	return {
+		"__type": "Pointer",
+		"className": "User",
+		"objectId": this.objectId
+	};
+}
+
 User.prototype = {
 	login: login,
 	register: register,
+	toPointer: toPointer,
 	constructor: User
 };
 

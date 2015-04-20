@@ -78,7 +78,8 @@ function save() {
 					key !== "createdAt" ) {
 				
 				// We would want to send parse objects as pointers
-				if ( self[ key ] instanceof ParseObject ) {
+				if ( self[ key ] instanceof ParseObject ||
+						self[ key ] instanceof User ) {
 					data[ key ] = self[ key ].toPointer();
 				} else {
 					data[ key ] = self[ key ];

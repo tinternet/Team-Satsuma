@@ -3,19 +3,38 @@ define( [
 	"models/ParseObject",
 	"models/User",
 	"models/Answer",
+	"models/Exceptions",
 	"extends"
-], function( ParseObject, User, Answer ) {
+], function( ParseObject, User, Answer, Exception ) {
 
 function Question( category, title, content, author ) {
 	ParseObject.call( this, arguments[ 0 ] );
 	
-	if ( typeof title === "string" && typeof content === "string" &&
-			typeof category === "string" && author instanceof User ) {
-		this.category = category;
-		this.title = title;
-		this.content = content;
-		this.author = author;
+	// We don`t handle server response here
+	if ( typeof arguments[ 0 ] === "object" ) {
+		return;
 	}
+	
+	if ( title.isEmpty() ) {
+		throw Exception.emptyFieldException( "Question title cannot be empty value!" );
+	}
+	
+	if ( content.isEmpty() ) {
+		throw Exception.emptyFieldException( "Question content cannot be empty value!" );
+	}
+	
+	if ( category.isEmpty() ) {
+		throw Exception.emptyFieldException( "Please specify question category!" );
+	}
+	
+	if ( !( author instanceof User ) ) {
+		throw Exception.emptyFieldException( "Author must be User model instance!" );
+	}
+
+	this.category = category;
+	this.title = title;
+	this.content = content;
+	this.author = author;
 }
 
 Question.extends( ParseObject );
