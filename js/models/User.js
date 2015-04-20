@@ -1,76 +1,59 @@
 "use strict";
-define( [ "parseDotComHeader", "models/Exceptions" ], function( parseHeader, Exceptions ) {
+define( [
+	"parseDotComHeader",
+	"models/Exceptions",
+	"models/ParseObject",
+	"extends"
+], function( parseHeader, Exceptions, ParseObject ) {
 
 var
 	SIGNUP_URL = "https://api.parse.com/1/users",
-	LOGIN_URL = "https://api.parse.com/1/login";
+	LOGIN_URL = "https://api.parse.com/1/login",
+	LOGOUT_URL = "https://api.parse.com/1/logout";
 
 	
 // Examples for user constructor
 // new User( { username: "username", password: "password" } )
 // new User( "username", "password" );
 function User( username, password ) {
-	if ( !arguments.length ) {
-		throw Exceptions.usernameAndPasswordRequiredException();
-	} else if ( typeof arguments[ 0 ] === "object" ) {
-		// We have raw object -> copy to this
-		for ( var property in arguments[ 0 ] ) {
-			this[ property ] = arguments[ 0 ][ property ];
-		}
-		
-		// We don't wanna send useless and dangerous info to the server!
-		delete this[ "verifyPassword" ];
-	} else {
-		this.username = arguments[ 0 ];
-		this.password = arguments[ 1 ];
+	ParseObject.call( this, arguments[ 0 ] );
+	
+	// We don`t handle server response here
+	if ( typeof arguments[ 0 ] === "object" ) {
+		return this;
 	}
 	
-	if ( !this.username || !this.password ) {
+	if ( !arguments.length || username.isEmpty() || password.isEmpty() ) {
 		throw Exceptions.usernameAndPasswordRequiredException();
 	}
+	
+	this.username = username;
+	this.password = password;
 }
 
-function login( callback ) {
-	$.ajax({
+function login() {
+	return $.ajax({
 		method: "GET",
 		url: LOGIN_URL,
 		data: { username: this.username, password: this.password },
 		headers: parseHeader,
-		crossDomain: true,
 		context: this
 	})
 	.done(function( user ) {
-		localStorage.user = JSON.stringify( user );
-		
-		// Clear important data
+		User.call( this, user );
 		delete this.password;
-		
-		for ( var prop in user ) {
-			this[ prop ] = user[ prop ];
-		}
-		
-		callback();
-	})
-	.fail(function() {
-		callback( Exceptions.invalidUsernameOrPasswordException() );
+		localStorage.user = JSON.stringify( this );
 	});
 }
 
 function register( callback ) {
-	$.ajax({
+	return $.ajax({
 		method: "POST",
 		url: SIGNUP_URL,
-		data: JSON.stringify( this ),
+		data: JSON.stringify( { username: this.username, password: this.password } ),
 		headers: parseHeader,
-		crossDomain: true,
 		contentType: "application/json",
 		context: this
-	})
-	.done(function() {
-		this.login( callback );
-	})
-	.fail(function() {
-		callback( Exceptions.usernameAlreadyTakenException() );
 	});
 }
 
@@ -103,6 +86,8 @@ User.getCurrent = function() {
 
 User.logout = function() {
 	delete localStorage.user;
+	
+	// TODO: Make ajax request to LOGOUT_URL to delete the server session
 };
 
 return User;

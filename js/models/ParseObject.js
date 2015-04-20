@@ -48,7 +48,6 @@ function ParseObject( serverResponse ) {
 
 function save() {
 	var url = URL + this.constructor.name,
-		deferred = $.Deferred(),
 		data = {},
 		self = this,
 		headers = Object.create( parseHeader ),
@@ -73,26 +72,24 @@ function save() {
 	
 	*/
 	
-	Object
-		.keys( this )
-		.forEach(function( key ) {
-			if ( self.hasOwnProperty( key ) &&
-					key !== "_existsOnServer" &&
-					key !== "objectId" &&
-					key !== "updatedAt" &&
-					key !== "createdAt" ) {
-				
-				// We would want to send parse objects as pointers
-				if ( self[ key ] instanceof ParseObject ||
-						self[ key ] instanceof User ) {
-					data[ key ] = self[ key ].toPointer();
-				} else {
-					data[ key ] = self[ key ];
-				}
+	Object.keys( this ).forEach(function( key ) {
+		if ( self.hasOwnProperty( key ) &&
+				key !== "_existsOnServer" &&
+				key !== "objectId" &&
+				key !== "updatedAt" &&
+				key !== "createdAt" ) {
+			
+			// We would want to send parse objects as pointers
+			if ( self[ key ] instanceof ParseObject ||
+					self[ key ] instanceof User ) {
+				data[ key ] = self[ key ].toPointer();
+			} else {
+				data[ key ] = self[ key ];
 			}
-		});
+		}
+	});
 
-	$.ajax({
+	return $.ajax({
 		method: this._existsOnServer ? "PUT" : "POST",
 		url: this._existsOnServer ? url + "/" + this.objectId : url,
 		data: JSON.stringify( data ),
@@ -101,29 +98,19 @@ function save() {
 	})
 	.done(function( response ) {
 		this.constructor.call( this, response );
-		deferred.resolveWith( this );
-	})
-	.fail( $.proxy( deferred.reject, this ) );
-	
-	return deferred.promise();
+	});
 }
 
 function remove() {
-	var deferred = $.Deferred();
-	
-	if ( this._existsOnServer ) {
-		$.ajax({
-			method: "DELETE",
-			url: URL + this.constructor.name + "/" + this.objectId,
-			headers: parseHeader
-		})
-		.done( $.proxy( deferred.resolve, this ) )
-		.fail( $.proxy( deferred.reject, this ) );
-	} else {
-		deferred.resolveWith( this );
+	if ( !this._existsOnServer ) {
+		throw Error( "This object doesn`t exist on the server" );
 	}
 	
-	return deferred.promise();
+	return $.ajax({
+		method: "DELETE",
+		url: URL + this.constructor.name + "/" + this.objectId,
+		headers: parseHeader
+	});
 }
 
 function toPointer() {
@@ -146,9 +133,7 @@ ParseObject.prototype = {
 }
 
 ParseObject.loadAll = function( params ) {
-	var deferred = $.Deferred();
-	
-	$.ajax({
+	return $.ajax({
 		method: "GET",
 		url: URL + this.name,
 		headers: parseHeader,
@@ -158,16 +143,12 @@ ParseObject.loadAll = function( params ) {
 	.done(function( response ) {
 		// This function may be inherited
 		// We take "this" value to be sure that we point to the right constructor
-		var Constructor = this,
-			results = response.results.map(function( rawData ) {
-				return new Constructor( rawData );
-			});
+		var Constructor = this;
 		
-		deferred.resolve( results );
-	})
-	.fail( $.proxy( deferred.reject, this ) );
-	
-	return deferred.promise();
+		response.results.forEach(function( rawData, index, arr ) {
+			arr[ index ] = new Constructor( rawData );
+		});
+	});
 };
 
 return ParseObject;

@@ -4,36 +4,34 @@ define( [
 	"./modalReset",
 ], function( User ) {
 	
-var $loginModal = $( "#login-modal" );
-
 function showError( err ) {
 	$loginModal
 		.find( "p" )
 		.text( err.message )
 		.removeClass( "hidden" );
 }
+
+function onLoggedIn() {
+	$( "#login-modal" ).modal( "hide" );
+	$( "#navbar-user-panel" ).trigger( "update" );
+}
 	
 $( "#login-form" ).on( "submit", function( e ) {
 	e.preventDefault();
 	
 	var username = $( "#username-login-input" ).val(),
-		password = $( "#password-login-input" ).val(),
-		user;
+		password = $( "#password-login-input" ).val();
 		
 	try {
-		user = new User( username, password );
+		
+		new User( username, password )
+			.login()
+			.done( onLoggedIn )
+			.fail( showError );
+			
 	} catch ( err ) {
+		
 		showError( err );
-		return;
 	}
-	
-	user.login(function( err ) {
-		if ( err ) {
-			showError( err );
-		} else {
-			$loginModal.modal( "hide" );
-			$( "#navbar-user-panel" ).trigger( "update" );
-		}
-	});
 });
 });
