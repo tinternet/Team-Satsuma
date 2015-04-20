@@ -12,7 +12,7 @@ function Question( category, title, content, author ) {
 	
 	// We don`t handle server response here
 	if ( typeof arguments[ 0 ] === "object" ) {
-		return;
+		return this;
 	}
 	
 	if ( title.isEmpty() ) {
