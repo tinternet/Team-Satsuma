@@ -9,7 +9,7 @@
 	it ignores the copy procedure and sets the
 	instance state to new and not synchronized with the server.
 	
-	# See line 65 and 66 for more info about the instance sync state
+	# See save and remove methods for more info about the instance sync state
 */
 "use strict";
 define( [
@@ -20,30 +20,29 @@ define( [
 var URL = "https://api.parse.com/1/classes/";
 	
 function ParseObject( serverResponse ) {
-	if ( typeof serverResponse == "object" ) {
-		// The constructor is called when the server has returned raw response
-		// So we parse the response and copy all properties to "this"
-		
-		var keys = Object.keys( serverResponse ),
-			self = this;
-			
-		keys.forEach(function( key ) {
-			if ( key === "createdAt" || key === "updatedAt" ) {
-				self[ key ] =
-					new Date( serverResponse[ key ] ).toLocaleString();
-			} else {
-				self[ key ] = serverResponse[ key ];
-			}
-		});
-		
-		if ( !this.updatedAt ) {
-			this.updatedAt = this.createdAt;
-		}
-		
-		this._existsOnServer = true;
-	} else {
+	if ( typeof serverResponse !== "object" ) {
 		this._existsOnServer = false;
+		return this;
 	}
+	
+	// The constructor is called when the server has returned raw response
+	// So we parse the response and copy all properties to "this"
+	var self = this;
+	
+	Object.keys( serverResponse ).forEach(function( key ) {
+		if ( key === "createdAt" || key === "updatedAt" ) {
+			self[ key ] =
+				new Date( serverResponse[ key ] ).toLocaleString();
+		} else {
+			self[ key ] = serverResponse[ key ];
+		}
+	});
+	
+	if ( !this.updatedAt ) {
+		this.updatedAt = this.createdAt;
+	}
+	
+	this._existsOnServer = true;
 }
 
 function save() {
