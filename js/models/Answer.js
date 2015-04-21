@@ -5,7 +5,7 @@ define( [
 	"models/Question",
 	"models/Exceptions",
 	"extends"
-], function( parseObject, User, Question, Exception ) {
+], function( ParseObject, User, Question, Exception ) {
 
 function Answer( content, author, question ) {
 	ParseObject.call( this, arguments[0] );

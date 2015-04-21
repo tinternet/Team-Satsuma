@@ -49,3 +49,14 @@ h4.greetings {
 	background-color: transparent;
 }
 
+.table{
+	color: white;
+}
+
+.table span{
+	display: block;
+}
+
+.question-title{
+	font-size: 1.2em;
+}
