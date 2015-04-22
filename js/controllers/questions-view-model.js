@@ -4,35 +4,24 @@ define( [
 	"extends"
 ], function( Question ) {
 	$("#forum-categories").on("click", "a", function(event){
-		var nameCategory;
+		var nameCategory,
+			filter;
 		$("#header-container").addClass( "collapsed" );
 		nameCategory = $(event.target).text();
 		$(".name-category").text(nameCategory + " forum"); 
 		$(".table-category").empty();
 		
-		if(nameCategory === "JavaScript"){
-			Question.loadAll("where={ \"category\" : \"JavaScript\" }").done(function(response){
-				addQuestionDataToDOM(response);
-			});
-		}
+		filter = {
+			"category" : nameCategory
+		};
 		
-		if(nameCategory === "Java"){
-			Question.loadAll("where={ \"category\" : \"Java\" }").done(function(response){
+		Question.loadAll("where=" + JSON.stringify(filter))
+			.done(function(response){
 				addQuestionDataToDOM(response);
+			})
+			.fail(function(err){
+			//check connection problems, restart computer
 			});
-		}
-		
-		if(nameCategory === "PHP"){
-			Question.loadAll("where={ \"category\" : \"PHP\" }").done(function(response){
-				addQuestionDataToDOM(response);
-		});
-		}
-		
-		if(nameCategory === "C#"){
-			Question.loadAll("where={ \"category\" : \"C#\" }").done(function(response){
-				addQuestionDataToDOM(response);
-			});
-		}
 		
 	})
 	
@@ -88,5 +77,4 @@ define( [
 		}
 	}
 })
-
 
