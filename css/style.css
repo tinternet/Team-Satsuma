@@ -8,8 +8,18 @@ body {
 }
 
 #main-header {
-    margin-bottom: 20px;
-    box-shadow: 0 0 60px 10px black;
+    box-shadow: 0 0 10px black;
+    margin-bottom: 30px;
+}
+
+#header-container {
+	overflow: hidden;
+	max-height: 300px;
+	transition: all 1s ease;
+}
+
+#header-container.collapsed {
+	max-height: 0;
 }
 
 .jumbotron, .well {

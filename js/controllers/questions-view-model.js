@@ -5,7 +5,7 @@ define( [
 ], function( Question ) {
 	$("#forum-categories").on("click", "a", function(event){
 		var nameCategory;
-		$(".header-container").hide();
+		$("#header-container").addClass( "collapsed" );
 		nameCategory = $(event.target).text();
 		$(".name-category").text(nameCategory + " forum"); 
 		$(".table-category").empty();

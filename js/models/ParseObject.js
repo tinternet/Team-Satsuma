@@ -12,10 +12,7 @@
 	# See save and remove methods for more info about the instance sync state
 */
 "use strict";
-define( [
-	"parseDotComHeader",
-	
-], function( parseHeader ) {
+define( [ "parseDotComHeader" ], function( parseHeader ) {
 	
 var URL = "https://api.parse.com/1/classes/";
 	
@@ -43,11 +40,11 @@ function ParseObject( serverResponse ) {
 }
 
 function save() {
-	var User = require("models/User");
 	var url = URL + this.constructor.name,
 		data = {},
 		self = this,
 		headers = Object.create( parseHeader ),
+		User = require( "models/User" ),
 		currentUser = User.getCurrent();
 		
 		

@@ -11,9 +11,9 @@ requirejs.config({
 });
 
 require( [
+	"models/User",
 	"./userPanel",
 	"./search",
-	"models/User",
 	"controller/questions-view-model"
 	
 	/* Add more *CORE* dependencies to this array...
