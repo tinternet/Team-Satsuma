@@ -65,8 +65,8 @@ function registerUser( e ) {
 	new User( rawUser )
 		.register()
 		.fail( showError )
-		.done( function( user ) {
-			user
+		.done( function() {
+			this
 				.login()
 				.fail( showError )
 				.done( function() {

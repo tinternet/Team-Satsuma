@@ -14,9 +14,9 @@
 "use strict";
 define( [
 	"parseDotComHeader",
-	"models/User"
-], function( parseHeader, User ) {
-
+	
+], function( parseHeader ) {
+	
 var URL = "https://api.parse.com/1/classes/";
 	
 function ParseObject( serverResponse ) {
@@ -43,6 +43,7 @@ function ParseObject( serverResponse ) {
 }
 
 function save() {
+	var User = require("models/User");
 	var url = URL + this.constructor.name,
 		data = {},
 		self = this,

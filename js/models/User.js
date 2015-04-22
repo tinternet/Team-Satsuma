@@ -18,6 +18,8 @@ var
 function User( username, password ) {
 	ParseObject.call( this, arguments[ 0 ] );
 	
+	delete this._existsOnServer;
+	
 	// We don`t handle server response here
 	if ( typeof arguments[ 0 ] === "object" ) {
 		return this;
@@ -46,13 +48,12 @@ function login() {
 	});
 }
 
-function register( callback ) {
+function register() {
 	return $.ajax({
 		method: "POST",
 		url: SIGNUP_URL,
-		data: JSON.stringify( { username: this.username, password: this.password } ),
+		data: JSON.stringify( this ),
 		headers: parseHeader,
-		contentType: "application/json",
 		context: this
 	});
 }
