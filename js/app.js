@@ -13,9 +13,7 @@ requirejs.config({
 require( [
 	"./userPanel",
 	"./search",
-	"models/Question",
-	"models/Answer",
-	"controller/show-forum-categories"
+	"controller/questions-view-model"
 	
 	/* Add more *CORE* dependencies to this array...
 		There is no need to include modules for later use!

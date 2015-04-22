@@ -1,11 +1,8 @@
 ﻿"use strict";
 define( [
-	"models/ParseObject",
-	"models/User",
 	"models/Question",
-	"models/Exceptions",
 	"extends"
-], function( ParseObject, User, Question, Exception ) {
+], function( Question ) {
 	$("#forum-categories").on("click", "a", function(event){
 		var nameCategory;
 		$(".header-container").hide();

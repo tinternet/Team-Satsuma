@@ -129,6 +129,10 @@ ParseObject.prototype = {
 }
 
 ParseObject.loadAll = function( params ) {
+	// Sanitize the uri params
+	params = params.replace( " ", "" );
+	params = encodeURIComponent( params );
+	
 	return $.ajax({
 		method: "GET",
 		url: URL + this.name,
