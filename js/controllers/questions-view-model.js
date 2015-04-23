@@ -15,13 +15,14 @@ define( [
 		};
 		
 		$( "#header-container" ).addClass( "collapsed" );
-		$(".name-category").text( nameCategory + " topics" ); 
-		$( "#main-container" ).empty();
+		$(".name-category").text( nameCategory + " topics" );
 		
 		Question.loadAll( params )
 			.done(function( response ) {
 				var html = template( response.results );
-				$( "#main-container" ).append( html );
+				$( "#main-container" )
+					.empty()
+					.append( html );
 			})
 			.fail(function( err ) {
 				//check connection problems, restart computer
