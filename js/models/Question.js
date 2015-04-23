@@ -1,11 +1,23 @@
+/*
+	Extends ParseObject
+	
+	Prototype methods:
+		* getAnswers() - Returns all answers for this question as promise.
+		
+	Static methods:
+		* getById( id ) - Accepts id as first parameter.
+			Calling this method will increase question views count by 1.
+			Returns promise...
+*/
 "use strict";
 define( [
 	"models/ParseObject",
 	"models/User",
 	"models/Answer",
 	"models/Exceptions",
+	"parseDotComHeader",
 	"extends"
-], function( ParseObject, User, Answer, Exception ) {
+], function( ParseObject, User, Answer, Exception, parseHeader ) {
 
 function Question( category, title, content, author, tags ) {
 	ParseObject.call( this, arguments[ 0 ] );
@@ -46,6 +58,20 @@ Question.prototype.getAnswers = function() {
 	};
 	
 	return Answer.loadAll( "include=author&where=" + JSON.stringify( queryData ) );
+};
+
+Question.getById = function( id ) {
+	if ( id.isEmpty() ) {
+		throw Error( "Cannot load question without id!" );
+	}
+	
+	return $.ajax({
+		method: "POST",
+		url: "https://api.parse.com/1/function/viewQuestion"
+		data: JSON.stringify( { id: id } ),
+		headers: parseHeader,
+		context: this
+	});
 };
 
 return Question;

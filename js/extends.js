@@ -1,3 +1,6 @@
+/*
+ * Useful extensions
+ */
 "use strict";
 define(function() {
 

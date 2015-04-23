@@ -1,3 +1,7 @@
+/*
+ * Controlls the behaviour of the login modal
+ */
+
 "use strict";
 define( [
 	"./models/User",

@@ -1,3 +1,17 @@
+/*
+ * User model
+ * 
+ * Prototype methods:
+ * 	register() - Attempts to register user with the current instance properties. Returns promise.
+ * 	login() - Attempts to login with the instance username & password properties. Returns promise.
+ * 	toPointer() - Returns the current instance as Parse.com pointer type.
+ * 	logout() - Logouts the current logged in user.
+ * 
+ * Static methods:
+ * 	getCurrent() - Returns the current logged in user or null if not logged in.
+ * 	logout() - Same as the prototype method.
+ */
+
 "use strict";
 define( [
 	"parseDotComHeader",

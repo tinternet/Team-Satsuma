@@ -10,6 +10,16 @@
 	instance state to new and not synchronized with the server.
 	
 	# See save and remove methods for more info about the instance sync state
+	
+	
+	Prototype methods:
+		* save() - Saves the current instance to the database. Returns promise.
+		* remove() - Removes the current instance from the database. Returns promise.
+		* toPointer() - Returns the current instance as Parse.com pointer type.
+		
+	Static methods:
+		* loadAll( params ) - Makes get request to the server to get all objects of the current type.
+			Accepts params as string and appends it to the url. Returns promise.
 */
 "use strict";
 define( [ "parseDotComHeader" ], function( parseHeader ) {

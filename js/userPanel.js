@@ -1,3 +1,7 @@
+/*
+ * Controlls the behaviour of the user panel located in the main navbar
+ * The user panel contains login/register/logout buttons and username link
+ */
 "use strict";
 define( [
 	"./models/User",

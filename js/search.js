@@ -1,3 +1,6 @@
+/*
+ * Controlls the behaviour of the search form
+ */
 "use strict";
 define(function() {
 	

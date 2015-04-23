@@ -1,3 +1,6 @@
+/*
+ * Clears the login/register modals on closed/closing
+ */
 "use strict";
 define(function() {
 

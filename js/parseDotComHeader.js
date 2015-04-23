@@ -1,3 +1,6 @@
+/*
+ * Parse.com app and rest api header key-values
+ */
 "use strict";
 define({
 	"X-Parse-Application-Id": "x7AxhOrmjVYWNby7K1a7JMMp00O8LMD5jomywrqm",

@@ -1,3 +1,6 @@
+/*
+ * Controlls the behaviour of the register modal
+ */
 "use strict";
 define( [
 	"./models/User",
