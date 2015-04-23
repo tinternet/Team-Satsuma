@@ -4,7 +4,6 @@ define( [
 	"text!template/register-modal.html",
 	"./modalReset"
 ], function( User, registerModalTemplate ) {
-	sakjdajskdjkasjkld
 	
 var REQUIRED_FIELDS_COUNT = 5;
 
