@@ -1,11 +1,20 @@
 <table class="table">
-{{#each this}}
-<tr>
-	<td>
-		<a href="#" class="question-title">{{title}}</a>
-	</td>
-	<td>{{createdAt}}</td>
-	<td>{{viewsCount}}</td>
-</tr>
-{{/each}}
+<tbody>
+	{{#each this}}
+	<tr>
+		<td>
+			<a href="#" class="question-title">{{title}}</a>
+		</td>
+		<td>{{createdAt}}</td>
+		<td>{{viewsCount}}</td>
+	</tr>
+	{{/each}}
+</tbody>
+<thead>
+	<tr>
+		<th>Title</th>
+		<th>Date posted</th>
+		<th>Views</th>
+	</tr>
+</thead>
 </table>
