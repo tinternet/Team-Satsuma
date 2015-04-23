@@ -5,9 +5,9 @@
 		* getAnswers() - Returns all answers for this question as promise.
 		
 	Static methods:
-		* getById( id ) - Accepts id as first parameter.
+		* getById( id ) - Makes get request and accepts id as first parameter.
 			Calling this method will increase question views count by 1.
-			Returns promise...
+			Returns promise for the request.
 */
 "use strict";
 define( [
@@ -54,10 +54,13 @@ Question.extends( ParseObject );
 
 Question.prototype.getAnswers = function() {
 	var queryData = {
-		"question": this.toPointer()
+		include: "author",
+		where: {
+			question: this.toPointer()
+		}
 	};
 	
-	return Answer.loadAll( "include=author&where=" + JSON.stringify( queryData ) );
+	return Answer.loadAll( queryData );
 };
 
 Question.getById = function( id ) {
@@ -67,8 +70,8 @@ Question.getById = function( id ) {
 	
 	return $.ajax({
 		method: "POST",
-		url: "https://api.parse.com/1/function/viewQuestion"
-		data: JSON.stringify( { id: id } ),
+		url: "https://api.parse.com/1/function/viewQuestion",
+		data: { id: id },
 		headers: parseHeader,
 		context: this
 	});

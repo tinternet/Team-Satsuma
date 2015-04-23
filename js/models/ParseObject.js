@@ -19,7 +19,8 @@
 		
 	Static methods:
 		* loadAll( params ) - Makes get request to the server to get all objects of the current type.
-			Accepts params as string and appends it to the url. Returns promise.
+			Accepts params as plain object which is converted to URI params and appended to the URL.
+			Returns the request promise.
 */
 "use strict";
 define( [ "parseDotComHeader" ], function( parseHeader ) {
@@ -137,10 +138,6 @@ ParseObject.prototype = {
 }
 
 ParseObject.loadAll = function( params ) {
-	// Sanitize the uri params
-	params = params.replace( " ", "" );
-	params = encodeURIComponent( params );
-	
 	return $.ajax({
 		method: "GET",
 		url: URL + this.name,
@@ -151,10 +148,10 @@ ParseObject.loadAll = function( params ) {
 	.done(function( response ) {
 		// This function may be inherited
 		// We take "this" value to be sure that we point to the right constructor
-		var Constructor = this;
+		var TargetConstructor = this;
 		
 		response.results.forEach(function( rawData, index, arr ) {
-			arr[ index ] = new Constructor( rawData );
+			arr[ index ] = new TargetConstructor( rawData );
 		});
 	});
 };
