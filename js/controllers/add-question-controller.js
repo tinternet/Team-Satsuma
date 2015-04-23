@@ -42,6 +42,11 @@ define( [
                     .append( "<label for='question-content-input'>" )
                     .append( "<textarea class='form-control' name='questionContent' id='question-content-input'>" )
             )
+                        .append(
+            $("<div class='add-question-container'>")
+                    .append( $( "<label for='question-tags'>" ).text( "Tags:" ) )
+                    .append( "<input class='form-control' type='text' name='questionTags' id='question-tags' palceholder='Add tags separated by space or ,'>" )
+            )
             .append( "<input type='button' id='question-add-button' value='Submit Question'>" );
 
         $questionFields.appendTo( $panelBody );
@@ -55,6 +60,7 @@ define( [
             title = $( "#question-title").val(),
             content = $( "#question-content").val(),
             category = $( "#add-question-forum-categories option:selected").val(),
+            tags = $("#question-tags").val().split(/[, ]/);
             question;
 
         if ( title.isEmpty() || content.isEmpty() ) {

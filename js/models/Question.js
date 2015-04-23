@@ -7,7 +7,7 @@ define( [
 	"extends"
 ], function( ParseObject, User, Answer, Exception ) {
 
-function Question( category, title, content, author ) {
+function Question( category, title, content, author, tags ) {
 	ParseObject.call( this, arguments[ 0 ] );
 	
 	// We don`t handle server response here
@@ -35,6 +35,7 @@ function Question( category, title, content, author ) {
 	this.title = title;
 	this.content = content;
 	this.author = author;
+	this.tags = tags || [];
 }
 
 Question.extends( ParseObject );
