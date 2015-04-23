@@ -1,8 +1,10 @@
 "use strict";
 define( [
 	"./models/User",
+	"text!template/register-modal.html",
 	"./modalReset"
-], function( User ) {
+], function( User, registerModalTemplate ) {
+	sakjdajskdjkasjkld
 	
 var REQUIRED_FIELDS_COUNT = 5;
 
@@ -75,6 +77,8 @@ function registerUser( e ) {
 				} );
 		} );
 }
+
+$( "body" ).append( registerModalTemplate );
 
 $( "#register-form" )
 	.on( "blur", "input", validateFields )

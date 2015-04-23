@@ -13,74 +13,6 @@
 </head>
 <body>
 
-<!-- Login modal -->
-<div id="login-modal" class="modal fade animated rollIn">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form id="login-form" method="get" action="#">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title">Login</h4>
-					<p class="animated fadeIn text-info text-center hidden"></p>
-				</div>
-				<div class="modal-body login-input-container">
-					<div class="login-input-container">
-						<label class="control-label" for="username-login-input">Username: </label>
-						<input class="form-control" type="text" name="username" id="username-login-input">
-					</div>
-					<div class="login-input-container">
-						<label class="control-label" for="password-login-input">Password: </label>
-						<input class="form-control" type="password" name="password" id="password-login-input">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="submit" class="btn btn-default" value="Login" />
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<!-- Registration modal -->
-<div id="register-modal" class="modal fade animated rollIn">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form id="register-form" method="post" action="#">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title">Sign up</h4>
-					<p class="animated fadeIn text-info text-center hidden"></p>
-				</div>
-				<div class="modal-body">
-					<div class="register-input-container">
-						<label class="control-label" for="first-name-input">First name: </label>
-						<input class="form-control" type="text" name="firstName" id="first-name-input" autofocus>
-					</div>
-					<div class="register-input-container">
-						<label class="control-label" for="last-name-input">Last name: </label>
-						<input class="form-control" type="text" name="lastName" id="last-name-input">
-					</div>
-					<div class="register-input-container">
-						<label class="control-label" for="username-input">Username: </label>
-						<input class="form-control" type="text" name="username" id="username-input">
-					</div>
-					<div class="register-input-container">
-						<label class="control-label" for="password-input">Password: </label>
-						<input class="form-control" type="password" name="password" id="password-input">
-					</div>
-					<div class="register-input-container">
-						<label class="control-label" for="verify-password-input">Repeat password: </label>
-						<input class="form-control" type="password" name="verifyPassword" id="verify-password-input">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="submit" class="btn btn-primary" value="Register">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
 <!-- Main nav -->
 <nav class="navbar navbar-default animated fadeInDown">
 	<div class="container">
@@ -147,7 +79,7 @@
 		<div class="col-md-12">
 			<header id="main-header">
 				<img src="img/banner-jquery.jpg" alt="Let's talk about" class="img-responsive">
-				<!-- Make changes to the header at this level  -->				
+				<!-- Make changes to the header at this level  -->
 			</header>
 		</div>
 	</div>
@@ -168,7 +100,7 @@
 		
 		<div class="col-md-3">
 		
-			<aside class="panel panel-info  animated flipInY">
+			<aside class="panel panel-info animated flipInY">
 				<div class="panel-heading">
 					<h3 class="panel-title">Recent topics:</h3>
 				</div>
@@ -201,6 +133,7 @@
 <!-- JS includes -->
 <script src="js/lib/jquery-2.1.3.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
+<script src="js/lib/handlebars-v3.0.1.js"></script>
 <script src="js/lib/require.js" data-main="js/app.js"></script>
 </body>
 </html>

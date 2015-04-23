@@ -1,8 +1,9 @@
 "use strict";
 define( [
 	"./models/User",
-	"./modalReset",
-], function( User ) {
+	"text!template/login-modal.html",
+	"./modalReset"
+], function( User, loginModalTemplate ) {
 	
 function showError( err ) {
 	$loginModal
@@ -15,6 +16,8 @@ function onLoggedIn() {
 	$( "#login-modal" ).modal( "hide" );
 	$( "#navbar-user-panel" ).trigger( "update" );
 }
+	
+$( "body" ).append( loginModalTemplate );
 	
 $( "#login-form" ).on( "submit", function( e ) {
 	e.preventDefault();

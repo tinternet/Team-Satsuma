@@ -6,7 +6,8 @@ requirejs.config({
 	baseUrl: "js/",
 	paths: {
 		"model": "models",
-		"controller": "controllers"
+		"controller": "controllers",
+		"template": "../templates"
 	}
 });
 
@@ -20,7 +21,6 @@ require( [
 		There is no need to include modules for later use!
 		Note: We require a module *just* before we need it! */
 ], function() {
-	// Main method
 	
 });
 
