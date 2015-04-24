@@ -74,6 +74,9 @@ Question.getById = function( id ) {
 		data: { id: id },
 		headers: parseHeader,
 		context: this
+	})
+	.done(function( response ) {
+		response.question = new Question( response );
 	});
 };
 
