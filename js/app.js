@@ -19,6 +19,16 @@ require( [
 		There is no need to include modules for later use!
 		Note: We require a module *just* before we need it! */
 ], function() {
+	var $progress = $( "#main-progress" );
+	
+	$( document )
+		.ajaxStop(function() {
+			$progress.hide();
+		})
+		.ajaxStart(function() {
+			$progress.show();
+		});
+	
 	Sammy(function() {
 		this
 			.get( "#/", function() {
