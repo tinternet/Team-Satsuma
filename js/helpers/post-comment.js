@@ -1,8 +1,10 @@
 "use strict";
 define([
-	"models/Answer"
-], function( Answer ) {
-return function postComment( data, showAnswer ) {
+	"models/Answer",
+	"models/User",
+	"models/Question"
+], function( Answer, User, Question ) {
+return function postComment( data, question, showAnswer ) {
 	
 	
 	
@@ -16,8 +18,17 @@ return function postComment( data, showAnswer ) {
 	 * showAnswer( answer );
 	 * 
 	 */
+
+	var content = data[0].value,
+		author = User.getCurrent(),
+		question = question.toPointer();
+
+	var answer = new Answer( content, author, question );
+
+	//answer.save();
+	//showAnswer( answer );
 	
-	console.log( data );
+	console.log( answer );
 	
 };
 });

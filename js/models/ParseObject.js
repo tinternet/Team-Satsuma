@@ -58,7 +58,7 @@ function save() {
 		User = require( "models/User" ),
 		currentUser = User.getCurrent();
 		
-		
+
 	/* Skip ACL stuff for now
 		
 	if ( currentUser == null ) {

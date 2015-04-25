@@ -53,9 +53,12 @@ function show( id ) {
 					$( "#post-comment-form" ).on( "submit", function( e ) {
 						e.preventDefault();
 						e.stopPropagation();
-						
+
 						var formData = $( this ).serializeArray();
-						postComment( formData, showAnswer );
+
+						console.log(question.question);
+
+						postComment( formData, question.question, showAnswer );
 					});
 				});
 			});
