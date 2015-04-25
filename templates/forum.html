@@ -2,7 +2,7 @@
 	<div class="row">
 		{{#each this}}
 		<article class="col-md-12">
-			<div class="well clearfix">
+			<div class="well">
 				<a href="#/forum/view/{{objectId}}">
 					<h3>{{title}}</h3>
 				</a>
@@ -11,6 +11,12 @@
 				<p class="text-danger">Views: {{viewsCount}}</p>
 			</div>
 		</article>
+		{{else}}
+		<div class="col-md-12">
+			<div class="well">
+				<h3>No questions in this category...</h3>
+			</div>
+		</div>
 		{{/each}}
 	</div>
 </div>
