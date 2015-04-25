@@ -4,9 +4,9 @@
 
 "use strict";
 define( [
-	"./models/User",
+	"models/User",
 	"text!template/login-modal.html",
-	"./modalReset"
+	"helpers/modalReset"
 ], function( User, loginModalTemplate ) {
 	
 function showError( err ) {
@@ -25,6 +25,7 @@ $( "body" ).append( loginModalTemplate );
 	
 $( "#login-form" ).on( "submit", function( e ) {
 	e.preventDefault();
+	e.stopPropagation();
 	
 	var username = $( "#username-login-input" ).val(),
 		password = $( "#password-login-input" ).val();

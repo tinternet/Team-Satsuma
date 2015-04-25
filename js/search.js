@@ -5,7 +5,7 @@
 define([
 	"models/Question",
 	"text!template/search-results.html",
-	"extends"
+	"helpers/extends"
 ], function( Question, searchResultsTemplate ) {
 
 function search( e ) {

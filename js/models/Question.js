@@ -16,7 +16,7 @@ define( [
 	"models/Answer",
 	"models/Exceptions",
 	"parseDotComHeader",
-	"extends"
+	"helpers/extends"
 ], function( ParseObject, User, Answer, Exception, parseHeader ) {
 
 function Question( category, title, content, author, tags ) {

@@ -3,9 +3,9 @@
  */
 "use strict";
 define( [
-	"./models/User",
+	"models/User",
 	"text!template/register-modal.html",
-	"./modalReset"
+	"helpers/modalReset"
 ], function( User, registerModalTemplate ) {
 	
 var REQUIRED_FIELDS_COUNT = 5;
@@ -44,6 +44,7 @@ function validateFields( e ) {
 
 function registerUser( e ) {
 	e.preventDefault();
+	e.stopPropagation();
 		
 	var formFieldsKeyValues = $( "#register-form" ).serializeArray(),
 		i = 0, len = formFieldsKeyValues.length,

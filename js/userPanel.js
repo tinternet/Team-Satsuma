@@ -4,11 +4,17 @@
  */
 "use strict";
 define( [
-	"./models/User",
-	"./modalReset",
-	"./login",
-	"./register"
+	"models/User",
+	"helpers/modalReset",
+	"helpers/login",
+	"helpers/register"
 ], function( User ) {
+
+var $dropdownToggle = $( "#forum-categories" ).prev( "a" );
+
+$( "#forum-categories" ).on( "click", "li", function( e ) {
+	$dropdownToggle.trigger( "click" );
+});
 
 $( "#navbar-user-panel" )
 	

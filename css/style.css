@@ -22,6 +22,14 @@ body {
 	max-height: 0;
 }
 
+#post-comment-form .form-group {
+	margin: 0 0 5px 0px;
+}
+
+#post-comment-form textarea {
+	max-width: 100%;
+}
+
 .jumbotron, .well {
 	background-color: transparent;
 	border: none;

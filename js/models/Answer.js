@@ -4,7 +4,7 @@ define( [
 	"models/User",
 	"models/Question",
 	"models/Exceptions",
-	"extends"
+	"helpers/extends"
 ], function( ParseObject, User, Question, Exception ) {
 
 function Answer( content, author, question ) {

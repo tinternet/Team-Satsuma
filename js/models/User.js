@@ -17,7 +17,7 @@ define( [
 	"parseDotComHeader",
 	"models/Exceptions",
 	"models/ParseObject",
-	"extends"
+	"helpers/extends"
 ], function( parseHeader, Exceptions, ParseObject ) {
 
 var

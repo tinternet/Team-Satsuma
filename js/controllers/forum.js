@@ -4,7 +4,7 @@ define([
 	"models/Question"
 ], function( Question ) {
 	
-function showView( view, data ) {
+function showView( view, data, callback ) {
 	var viewPath = "text!template/" + view;
 	
 	require( [ viewPath ], function( view ) {
@@ -13,8 +13,16 @@ function showView( view, data ) {
 		
 		$( "#page-container" )
 			.empty()
-			.append( html );
+			.html( html );
+			
+		if ( callback ) {
+			callback();
+		}
 	});
+}
+
+function showAnswer( answer ) {
+	
 }
 
 function showCategory( category ) {
@@ -36,7 +44,17 @@ function showCategory( category ) {
 function show( id ) {
 	Question.getById( id )
 		.done(function( question ) {
-			showView( "topic.html", question.question );
+			showView( "topic.html", question.question, function() {
+				require( [ "helpers/post-comment" ], function( postComment ) {
+					$( "#post-comment-form" ).on( "submit", function( e ) {
+						e.preventDefault();
+						e.stopPropagation();
+						
+						var formData = $( this ).serializeArray();
+						postComment( formData, showAnswer );
+					});
+				});
+			});
 		})
 		.fail(function( err ) {
 			console.error( err );
