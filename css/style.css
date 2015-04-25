@@ -63,10 +63,37 @@ h4.greetings {
 	color: white;
 }
 
-.table span{
-	display: block;
+.question   {
+	color: white;
+	border-bottom: 1px solid #fff;
 }
 
-.question-title{
-	font-size: 1.2em;
+.question h3{
+    display: inline-block;
+    width: 65%;
+    padding-left: 20px;
 }
+
+#main-container section:last-of-type{
+    border-bottom: none;
+}
+
+#main-container section h3:first-of-type{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.question-createdAt, .views {
+    display: inline-block;
+}
+
+.question-createdAt{
+    width: 20%;
+    text-align: center;
+}
+
+.views {
+    width: 10%;
+    text-align: right;
+}
+
