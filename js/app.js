@@ -1,5 +1,5 @@
 "use strict";
-(function( $, requirejs ) {
+(function( $, requirejs, Sammy ) {
 	
 // Require js configuration
 requirejs.config({
@@ -12,17 +12,36 @@ requirejs.config({
 });
 
 require( [
-	"models/User",
 	"./userPanel",
-	"./search",
-	"controller/questions-view-model"
+	"./search"
 	
 	/* Add more *CORE* dependencies to this array...
 		There is no need to include modules for later use!
 		Note: We require a module *just* before we need it! */
 ], function() {
-	
+	Sammy(function() {
+		this
+			.get( "#/", function() {
+				$( "#page-container" )
+					.empty()
+					.load( "templates/index.html" );
+			})
+			.get( "#/forum/category/:category", function() {
+				var category = this.params.category;
+				
+				require( [ "controller/forum" ], function( forumController ) {
+					forumController.showCategory( category );
+				});
+			})
+			.get( "#/forum/view/:id", function() {
+				var id = this.params.id;
+				
+				require( [ "controller/forum" ], function( forumController ) {
+					forumController.show( id );
+				});
+			});
+	}).run( "#/" );
 });
 
-}( $, requirejs ));
+}( $, requirejs, Sammy ));
 
