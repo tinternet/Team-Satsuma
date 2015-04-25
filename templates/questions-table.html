@@ -1,15 +1,4 @@
 <table class="table">
-<tbody>
-	{{#each this}}
-	<tr>
-		<td>
-			<a href="#" class="question-title">{{title}}</a>
-		</td>
-		<td>{{createdAt}}</td>
-		<td>{{viewsCount}}</td>
-	</tr>
-	{{/each}}
-</tbody>
 <thead>
 	<tr>
 		<th>Title</th>
@@ -17,4 +6,15 @@
 		<th>Views</th>
 	</tr>
 </thead>
+<tbody>
+{{#each this}}
+<tr>
+    <td>
+        <a href="#" data-id="{{objectId}}">{{title}}</a>
+    </td>
+    <td>{{createdAt}}</td>
+    <td>{{viewsCount}}</td>
+</tr>
+{{/each}}
+</tbody>
 </table>
