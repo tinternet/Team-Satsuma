@@ -70,13 +70,13 @@ Question.getById = function( id ) {
 	
 	return $.ajax({
 		method: "POST",
-		url: "https://api.parse.com/1/function/viewQuestion",
+		url: "https://api.parse.com/1/functions/viewQuestion",
 		data: { id: id },
 		headers: parseHeader,
 		context: this
 	})
 	.done(function( response ) {
-		response.question = new Question( response );
+		response.question = new Question( response.result );
 	});
 };
 
