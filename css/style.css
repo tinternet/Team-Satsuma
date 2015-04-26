@@ -44,7 +44,9 @@ body {
 	box-shadow: 0 0 10px 5px black;
 }
 
-
+.text-info {
+	word-wrap: break-word;
+}
 
 .text-info img{
 	margin-left: -60px;

@@ -2,8 +2,9 @@
 
 define([
 	"models/Question",
-	"models/Answer"
-], function( Question, Answer ) {
+	"models/Answer",
+	"helpers/post-comment"
+], function( Question, Answer, postComment ) {
 	
 function getView( view ) {
 	var viewPath = "text!template/" + view;
