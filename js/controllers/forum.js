@@ -26,11 +26,15 @@ function showAnswer( answer ) {
 }
 
 function showCategory( category ) {
-	var params = {
-		where: {
+	var params = {};
+	
+	if ( category ) {
+		params.where = {
 			category: category
-		}
-	};
+		};
+	}
+	
+	params.order = "-createdAt";
 	
 	Question.loadAll( params )
 		.done(function( response ) {

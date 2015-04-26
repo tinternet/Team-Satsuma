@@ -32,9 +32,14 @@ require( [
 	Sammy(function() {
 		this
 			.get( "#/", function() {
-				$( "#page-container" )
-					.empty()
-					.load( "templates/index.html" );
+				require( [ "controller/home" ], function( homeController ) {
+					homeController.index();
+				});
+			})
+			.get ( "#/forum", function() {
+				require( [ "controller/forum" ], function( forumController ) {
+					forumController.showCategory();
+				});
 			})
 			.get( "#/forum/category/:category", function() {
 				var category = this.params.category;
