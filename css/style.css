@@ -37,6 +37,10 @@ body {
 	margin: 0;
 }
 
+section.panel.panel-info {
+	background-color: transparent;
+}
+
 .jumbotron, .well {
 	background-color: transparent;
 	border: none;

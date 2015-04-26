@@ -24,10 +24,8 @@ return function postComment( data, question, showAnswer ) {
 
 	var answer = new Answer( content, author, question );
 
-	answer.save();
-	showAnswer( answer );
-	
-	console.log( question );
-	
+	answer.save().done(function() {
+		showAnswer( answer );
+	});
 };
 });
