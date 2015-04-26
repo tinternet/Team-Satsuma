@@ -20,12 +20,11 @@ return function postComment( data, question, showAnswer ) {
 	 */
 
 	var content = data[0].value,
-		author = User.getCurrent(),
-		question = question.toPointer();
+		author = User.getCurrent();
 
 	var answer = new Answer( content, author, question );
 
-	//answer.save();
+	answer.save();
 	//showAnswer( answer );
 	
 	console.log( answer );
