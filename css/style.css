@@ -111,3 +111,8 @@ h4.greetings {
     text-align: right;
 }
 
+.credentials {
+	font-style: italic;
+	color: #DD4814;
+	margin-bottom: 1em;
+}

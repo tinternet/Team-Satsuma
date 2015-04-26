@@ -13,6 +13,21 @@
 			
 			<p>{{question.content}}</p>
 		</div>
+
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Comments</h3>
+			</div>
+			<div class="panel-body">
+				{{#each answers}}
+				<div class="text-info">
+					<div class="credentials">Posted by: {{author.username}} | On: {{createdAt}}</div>
+					<p>{{content}}</p>
+				</div>
+				<hr>
+				{{/each}}
+			</div>
+		</div>
 		
 		<div class="well">
 			<form id="post-comment-form" class="form-horizontal">
@@ -29,18 +44,6 @@
 				</fieldset>
 			</form>
 		</div>
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				<h3 class="panel-title">Comments</h3>
-			</div>
-			<div class="panel-body">
-				{{#each answers}}
-					<p class="text-info">
-					{{content}}
-					</p>
-					<hr>
-				{{/each}}
-			</div>
-		</div>
+
 	</article>
 </div>
