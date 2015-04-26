@@ -1,24 +1,21 @@
 "use strict";
 
 define([
-	"models/Question"
-], function( Question ) {
+	"models/Question",
+	"models/Answer"
+], function( Question, Answer ) {
 	
-function showView( view, data, callback ) {
+function getView( view ) {
 	var viewPath = "text!template/" + view;
+	var deferred = $.Deferred();
 	
 	require( [ viewPath ], function( view ) {
 		var template = Handlebars.compile( view );
-		var html = template( data );
 		
-		$( "#page-container" )
-			.empty()
-			.html( html );
-			
-		if ( callback ) {
-			callback();
-		}
+		deferred.resolve( template );
 	});
+	
+	return deferred.promise();
 }
 
 function showAnswer( answer ) {
@@ -46,32 +43,38 @@ function showCategory( category ) {
 }
 
 function show( id ) {
-	Question.getById( id )
-		.done(function( question ) {
-			question = question.question;
+	var filter = {
+		include: "author",
+		where: {
+			"question": {
+				"__type": "Pointer",
+				"className": "Question",
+				"objectId": id
+			}
+		}
+	};
+	var questionRequest = Question.getById( id );
+	var answersRequest = Answer.loadAll( filter );
+	var viewRequest = getView( "topic.html" );
+	
+	$.when( questionRequest, answersRequest, viewRequest )
+		.done(function( questionResponse, answersResponse, view ) {
+			var question = questionResponse[ 0 ].question;
+			var answers = answersResponse[ 0 ].results;
+			var data = { question: question, answers: answers };
+			var html = view( data );
 			
-			question.getAnswers().done(function( r ){
-				console.log( r );
-			});
-			
-			showView( "topic.html", question, function() {
-				require( [ "helpers/post-comment" ], function( postComment ) {
-					$( "#post-comment-form" ).on( "submit", function( e ) {
-						e.preventDefault();
-						e.stopPropagation();
-						var formData = $( this ).serializeArray();
+			$( "#page-container" ).empty().html( html );
+			$( "#post-comment-form" ).on( "submit", function( e ) {
+				e.preventDefault();
+				e.stopPropagation();
+				var formData = $( this ).serializeArray();
 
-						console.log(question.question);
-						
-						
-
-						postComment( formData, question, showAnswer );
-					});
-				});
+				postComment( formData, question, showAnswer );
 			});
 		})
 		.fail(function( err ) {
-			console.error( err );
+			console.log( err );
 		});
 }
 
