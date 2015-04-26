@@ -79,7 +79,7 @@ function toPointer() {
 	
 	return {
 		"__type": "Pointer",
-		"className": "User",
+		"className": "_User",
 		"objectId": this.objectId
 	};
 }
