@@ -79,7 +79,7 @@ function toPointer() {
 	
 	return {
 		"__type": "Pointer",
-		"className": "User",
+		"className": "_User",
 		"objectId": this.objectId
 	};
 }
@@ -95,7 +95,8 @@ User.getCurrent = function() {
 	if ( !localStorage.user ) {
 		return null;
 	} else {
-		return JSON.parse( localStorage.user );
+		var user = JSON.parse( localStorage.user );
+		return new User( user );
 	}
 };
 

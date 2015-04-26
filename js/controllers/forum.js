@@ -48,17 +48,24 @@ function showCategory( category ) {
 function show( id ) {
 	Question.getById( id )
 		.done(function( question ) {
-			showView( "topic.html", question.question, function() {
+			question = question.question;
+			
+			question.getAnswers().done(function( r ){
+				console.log( r );
+			});
+			
+			showView( "topic.html", question, function() {
 				require( [ "helpers/post-comment" ], function( postComment ) {
 					$( "#post-comment-form" ).on( "submit", function( e ) {
 						e.preventDefault();
 						e.stopPropagation();
-
 						var formData = $( this ).serializeArray();
 
 						console.log(question.question);
+						
+						
 
-						postComment( formData, question.question, showAnswer );
+						postComment( formData, question, showAnswer );
 					});
 				});
 			});

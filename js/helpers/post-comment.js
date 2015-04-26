@@ -23,6 +23,10 @@ return function postComment( data, question, showAnswer ) {
 		author = User.getCurrent();
 
 	var answer = new Answer( content, author, question );
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2e24cac57be0aa1cc8e09e133a5c51a6522b5aca
 	answer.save();
 	//showAnswer( answer );
 	
