@@ -28,7 +28,7 @@ function search( e ) {
 			var template = Handlebars.compile( searchResultsTemplate );
 			var html = template( response );
 			
-			$('#main-container-heading').text("Results for: " + searchedText);
+			$('.panel-title').text("Results for: " + searchedText);
 			$('#main-container').empty().append( html );
 		})
 		.fail(function( err ) {
