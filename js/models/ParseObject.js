@@ -58,24 +58,20 @@ function save() {
 		User = require( "models/User" ),
 		currentUser = User.getCurrent();
 		
-
-	/* Skip ACL stuff for now
-		
 	if ( currentUser == null ) {
-		deferred.rejectWith( this, "Cannot save object as anonymous user!" );
-		return deferred.promise();
+		throw Error( "Must be logged in first!" );
 	}
 	
+	this.author = currentUser; // Make sure that we have the author
+	
 	if ( !this._existsOnServer ) {
-		data.ACL = {
-			currentUser.objectId: { "read": true, "write": true },
-			"*": { "read": true }
-		};
+		var userId = currentUser.objectId;
+		
+		data.ACL = { "*": { "read": true } };
+		data.ACL[ userId ] = { "read": true, "write": true };
 	}
 	
 	headers[ "X-Parse-Session-Token" ] = currentUser.sessionToken;
-	
-	*/
 	
 	Object.keys( this ).forEach(function( key ) {
 		if ( self.hasOwnProperty( key ) &&

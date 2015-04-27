@@ -3,8 +3,8 @@
 define([
 	"models/Question",
 	"models/Answer",
-	"helpers/post-comment"
-], function( Question, Answer, postComment ) {
+	"models/User"
+], function( Question, Answer, User ) {
 
 function getView( view ) {
 	var viewPath = "text!template/" + view;
@@ -34,9 +34,22 @@ function showAnswer( answer ) {
 		.appendTo( "#comments-container" );
 }
 
+function processForm() {
+	if ( !User.getCurrent() ) {
+		$( "#post-comment-form textarea" )
+			.attr( "disabled", "true" )
+			.val( "Please log in to post answer!" );
+	} else {
+		$( "#post-comment-form textarea" )
+			.removeAttr( "disabled" )
+			.val( "" );
+	}
+}
+
 function showCategory( category ) {
 	var params = {
-		order: "-createdAt"
+		order: "-createdAt",
+		include: "author"
 	};
 	
 	if ( category ) {
@@ -89,16 +102,27 @@ function show( id ) {
 			var data = { question: question, answers: answers };
 			var html = view( data );
 			
-			$( "#page-container" ).empty().html( html );
+			$( "#page-container" )
+				.empty()
+				.html( html );
+				
+			processForm();
+				
 			$( "#post-comment-form" ).on( "submit", function( e ) {
 				e.preventDefault();
 				e.stopPropagation();
 				var formData = $( this ).serializeArray();
+				var answer = new Answer( formData[ 0 ].value, question );
 
-				postComment( formData, question, showAnswer );
-				
-				$( this ).find( "textarea" ).val( "" );
+				answer
+					.save()
+					.done(function() {
+						showAnswer( answer );
+						$( this ).find( "textarea" ).val( "" );
+					});
 			});
+			
+			$( document ).on( "userLoggedIn.forum userLoggedOut.forum", processForm );
 		})
 		.fail(function( err ) {
 			console.log( err );

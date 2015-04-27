@@ -7,17 +7,16 @@ define( [
 	"helpers/extends"
 ], function( ParseObject, User, Question, Exception ) {
 
-function Answer( content, author, question ) {
+function Answer( content, question ) {
 	ParseObject.call( this, arguments[0] );
 
-	if ( typeof content === "string" && author instanceof User ) {
+	if ( typeof content === "string") {
 		if ( content.isEmpty() ) {
 			throw Exception.emptyFieldException( "The answer content is empty!" );
 		} else {
 			this.content = content;
 		}
 
-		this.author = author;
 		this.question = question;
 	}
 }

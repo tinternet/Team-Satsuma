@@ -59,6 +59,7 @@ function login() {
 		User.call( this, user );
 		delete this.password;
 		localStorage.user = JSON.stringify( this );
+		$( document ).trigger( "userLoggedIn" );
 	});
 }
 
@@ -69,6 +70,12 @@ function register() {
 		data: JSON.stringify( this ),
 		headers: parseHeader,
 		context: this
+	})
+	.done(function( user ) {
+		User.call( this, user );
+		delete this.password;
+		localStorage.user = JSON.stringify( this );
+		$( document ).trigger( "userLoggedIn" );
 	});
 }
 
@@ -101,9 +108,24 @@ User.getCurrent = function() {
 };
 
 User.logout = User.prototype.logout = function() {
-	delete localStorage.user;
 	
-	// TODO: Make ajax request to LOGOUT_URL to delete the server session
+	// TODO: Check if user exists!
+	
+	var user = User.getCurrent(),
+	   headers = Object.create( parseHeader );
+	   
+	headers[ "X-Parse-Session-Token" ] = user.sessionToken;
+	
+	$.ajax({
+		url: LOGOUT_URL,
+		method: "POST",
+		headers: headers,
+		context: this
+	})
+	.done(function() {
+		delete localStorage.user;
+		$( document ).trigger( "userLoggedOut" );
+	});
 };
 
 return User;

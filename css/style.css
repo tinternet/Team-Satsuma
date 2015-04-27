@@ -26,7 +26,7 @@ body {
 	margin: 0 0 5px 0px;
 }
 
-#post-comment-form textarea {
+textarea {
 	max-width: 100%;
 }
 

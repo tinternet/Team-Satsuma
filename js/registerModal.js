@@ -5,7 +5,7 @@
 define( [
 	"models/User",
 	"text!template/register-modal.html",
-	"helpers/modalReset"
+	"modalReset"
 ], function( User, registerModalTemplate ) {
 	
 var REQUIRED_FIELDS_COUNT = 5;
@@ -71,13 +71,12 @@ function registerUser( e ) {
 		.register()
 		.fail( showError )
 		.done( function() {
-			this
-				.login()
-				.fail( showError )
-				.done( function() {
+			//this
+				//.login()
+				//.fail( showError )
+				//.done( function() {
 					$( "#register-modal" ).modal( "hide" );
-					$( "#navbar-user-panel" ).trigger( "update" );
-				} );
+				//} );
 		} );
 }
 

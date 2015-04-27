@@ -6,7 +6,7 @@
 define( [
 	"models/User",
 	"text!template/login-modal.html",
-	"helpers/modalReset"
+	"modalReset"
 ], function( User, loginModalTemplate ) {
 	
 function showError( err ) {
@@ -14,11 +14,6 @@ function showError( err ) {
 		.find( "p" )
 		.text( err.message )
 		.removeClass( "hidden" );
-}
-
-function onLoggedIn() {
-	$( "#login-modal" ).modal( "hide" );
-	$( "#navbar-user-panel" ).trigger( "update" );
 }
 	
 $( "body" ).append( loginModalTemplate );
@@ -34,7 +29,9 @@ $( "#login-form" ).on( "submit", function( e ) {
 		
 		new User( username, password )
 			.login()
-			.done( onLoggedIn )
+			.done( function() {
+				$( "#login-modal" ).modal( "hide" );
+			} )
 			.fail( showError );
 			
 	} catch ( err ) {

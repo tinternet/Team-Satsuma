@@ -12,13 +12,11 @@ requirejs.config({
 });
 
 require( [
-	"./userPanel",
-	"./search"
-	
-	/* Add more *CORE* dependencies to this array...
-		There is no need to include modules for later use!
-		Note: We require a module *just* before we need it! */
-], function() {
+	"controller/home",
+	"controller/forum",
+	"./navbar",
+	"./search",
+], function( homeController, forumController ) {
 	var $progress = $( "#main-progress" );
 	
 	$( document )
@@ -30,30 +28,22 @@ require( [
 		});
 	
 	Sammy(function() {
+		
 		this
 			.get( "#/", function() {
-				require( [ "controller/home" ], function( homeController ) {
-					homeController.index();
-				});
+				homeController.index();
 			})
 			.get ( "#/forum", function() {
-				require( [ "controller/forum" ], function( forumController ) {
-					forumController.showCategory();
-				});
+				forumController.showCategory();
 			})
 			.get( "#/forum/category/:category", function() {
-				var category = this.params.category;
-				
-				require( [ "controller/forum" ], function( forumController ) {
-					forumController.showCategory( category );
-				});
+				forumController.showCategory( this.params.category );
 			})
 			.get( "#/forum/view/:id", function() {
-				var id = this.params.id;
-				
-				require( [ "controller/forum" ], function( forumController ) {
-					forumController.show( id );
-				});
+				forumController.show( this.params.id );
+			})
+			.before(function() {
+				$( document ).off( ".forum .home" );
 			});
 	}).run( "#/" );
 });

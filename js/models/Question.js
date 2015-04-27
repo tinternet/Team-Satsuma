@@ -19,34 +19,17 @@ define( [
 	"helpers/extends"
 ], function( ParseObject, User, Answer, Exception, parseHeader ) {
 
-function Question( category, title, content, author, tags ) {
+function Question( category, title, content, tags ) {
 	ParseObject.call( this, arguments[ 0 ] );
 	
 	// We don`t handle server response here
 	if ( typeof arguments[ 0 ] === "object" ) {
 		return this;
 	}
-	
-	if ( title.isEmpty() ) {
-		throw Exception.emptyFieldException( "Question title cannot be empty value!" );
-	}
-	
-	if ( content.isEmpty() ) {
-		throw Exception.emptyFieldException( "Question content cannot be empty value!" );
-	}
-	
-	if ( category.isEmpty() ) {
-		throw Exception.emptyFieldException( "Please specify question category!" );
-	}
-	
-	if ( !( author instanceof User ) ) {
-		throw Exception.emptyFieldException( "Author must be User model instance!" );
-	}
 
 	this.category = category;
 	this.title = title;
 	this.content = content;
-	this.author = author;
 	this.tags = tags || [];
 }
 
