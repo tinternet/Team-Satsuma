@@ -27,9 +27,21 @@ function search( e ) {
 		.done( function( response ) {
 			var template = Handlebars.compile( searchResultsTemplate );
 			var html = template( response );
-			
-			$('.panel-title').text("Results for: " + searchedText);
-			$('#main-container').empty().append( html );
+
+            $('.name-category').text("Results for: " + searchedText);
+
+            $('#main-container').empty().append(html);
+
+            if(!response.results.length){
+                var noResults = $("<li>");
+                    noResults.text("No results found!");
+                $('#results-from-search').append(noResults);
+            }
+
+            $("#results-from-search").on("click", function(){
+                //TO DO - add click event for open question details            
+			})
+
 		})
 		.fail(function( err ) {
 			console.error( err ); // Debug only
