@@ -120,3 +120,23 @@ h4.greetings {
 	color: #DD4814;
 	margin-bottom: 1em;
 }
+
+#results-from-search{
+    list-style-type: none;
+    min-height: 200px;
+    padding-left: 15px;
+}
+
+#results-from-search li{
+    margin-top: 10px;
+}
+
+#results-from-search li a{
+    color: #fff;
+    font-weight: bold;
+}
+
+#results-from-search li span{
+    color: #fff;
+    margin-left: 5%;
+}
