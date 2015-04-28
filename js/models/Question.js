@@ -30,6 +30,7 @@ function Question( category, title, content, tags ) {
 	this.category = category;
 	this.title = title;
 	this.content = content;
+	this.viewsCount = 0;
 	this.tags = tags || [];
 }
 
