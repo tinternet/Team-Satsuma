@@ -20,9 +20,11 @@ function getView( view ) {
 }
 
 function showAnswer( answer ) {
+	var postedBy = answer.visitorName || answer.author.username;
+	
 	var $answerPanel = $( "<div class='text-info'>" );
 	var $credentials = $( "<div class='credentials'>" )
-		.text( "Posted by: " + answer.author.username + " | On: " + answer.createdAt )
+		.text( "Posted by: " + postedBy + " | On: " + answer.createdAt )
 		.appendTo( $answerPanel );
 	var $content = $( "<p>" )
 		.text( answer.content )
@@ -36,13 +38,9 @@ function showAnswer( answer ) {
 
 function processForm() {
 	if ( !User.getCurrent() ) {
-		$( "#post-comment-form textarea" )
-			.attr( "disabled", "true" )
-			.val( "Please log in to post answer!" );
+		$( "#visitor-name-input" ).show();
 	} else {
-		$( "#post-comment-form textarea" )
-			.removeAttr( "disabled" )
-			.val( "" );
+		$( "#visitor-name-input" ).hide();
 	}
 }
 
@@ -83,6 +81,7 @@ function showCategory( category ) {
 function show( id ) {
 	var filter = {
 		include: "author",
+		order: "createdAt",
 		where: {
 			"question": {
 				"__type": "Pointer",
@@ -112,7 +111,13 @@ function show( id ) {
 				e.preventDefault();
 				e.stopPropagation();
 				var formData = $( this ).serializeArray();
-				var answer = new Answer( formData[ 0 ].value, question );
+				var answer = new Answer();
+				
+				formData.forEach(function( data ) {
+					answer[ data.name ] = data.value;
+				});
+				
+				answer.question = question;
 
 				answer
 					.save()

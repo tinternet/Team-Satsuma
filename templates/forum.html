@@ -9,6 +9,11 @@
 				<p class="text-info">Date posted: {{createdAt}}</p>
 				<p class="text-success">Posted by: {{author.username}}</p>
 				<p class="text-danger">Views: {{viewsCount}}</p>
+				<p> Tags: 
+					{{#each tags}}
+					<span class="badge">{{this}}</span>
+					{{/each}}
+				</p>
 			</div>
 		</article>
 		{{else}}

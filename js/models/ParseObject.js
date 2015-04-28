@@ -67,21 +67,28 @@ function save() {
 		User = require( "models/User" ),
 		currentUser = User.getCurrent(),
 		isNew = this._existsOnServer;
-		
-	if ( currentUser == null ) {
+	
+	// Very stupid... This shouldn`t be here, but i have no time to improve it, sorry :))
+	if ( this.constructor.name !== "Answer" && currentUser == null ) { 
 		throw Error( "Must be logged in first!" );
 	}
 	
 	this.author = currentUser; // Make sure that we have the author
 	
 	if ( !this._existsOnServer ) {
-		var userId = currentUser.objectId;
+		
 		
 		data.ACL = { "*": { "read": true } };
-		data.ACL[ userId ] = { "read": true, "write": true };
+		
+		if ( this.constructor.name !== "Answer" ) { // Again stupid...
+			var userId = currentUser.objectId;
+			data.ACL[ userId ] = { "read": true, "write": true };
+		}
 	}
 	
-	headers[ "X-Parse-Session-Token" ] = currentUser.sessionToken;
+	if ( this.constructor.name !== "Answer" ) { // Again stupid...
+		headers[ "X-Parse-Session-Token" ] = currentUser.sessionToken;
+	}
 	
 	Object.keys( this ).forEach(function( key ) {
 		if ( self.hasOwnProperty( key ) &&

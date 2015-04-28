@@ -10,15 +10,12 @@ define( [
 function Answer( content, question ) {
 	ParseObject.call( this, arguments[0] );
 
-	if ( typeof content === "string") {
-		if ( content.isEmpty() ) {
-			throw Exception.emptyFieldException( "The answer content is empty!" );
-		} else {
-			this.content = content;
-		}
-
-		this.question = question;
+	if ( typeof arguments[ 0 ] === "object" ) {
+		return this;
 	}
+	
+	this.question = question;
+	this.content = content;
 }
 
 Answer.extends( ParseObject );

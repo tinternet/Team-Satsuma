@@ -9,6 +9,14 @@
 				<div class="col-md-4"><p>Views: {{question.viewsCount}}</p></div>
 			</div>
 			
+			<div class="row">
+				<div class="col-md-12">
+					{{#each question.tags}}
+					<span class="badge">{{this}}</span>
+					{{/each}}
+				</div>
+			</div>
+			
 			<hr>
 			
 			<p>{{question.content}}</p>
@@ -21,7 +29,12 @@
 			<div id="comments-container" class="panel-body">
 				{{#each answers}}
 				<div class="text-info">
+					{{#if author}}
 					<div class="credentials">Posted by: {{author.username}} | On: {{createdAt}}</div>
+					{{else}}
+					<div class="credentials">Posted by: {{visitorName}} | On: {{createdAt}}</div>
+					{{/if}}
+					
 					<p>{{content}}</p>
 				</div>
 				<hr>
@@ -33,6 +46,10 @@
 			<form id="post-comment-form" class="form-horizontal">
 				<fieldset>
 					<legend class="text-warning">Post comment</legend>
+					
+					<div class="form-group">
+						<input id="visitor-name-input" placeholder="Your name" name="visitorName" class="form-control">
+					</div>
 
 					<div class="form-group">
 						<textarea name="content" class="form-control" rows="3" id="textArea"></textarea>
