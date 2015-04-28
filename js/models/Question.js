@@ -19,6 +19,10 @@ define( [
 	"helpers/extends"
 ], function( ParseObject, User, Answer, Exception, parseHeader ) {
 
+var MAX_TITLE_LENGTH = 100,
+	MAX_CONTENT_LENGTH = 500,
+	MAX_TAG_LENGTH = 30;
+	
 function Question( category, title, content, tags ) {
 	ParseObject.call( this, arguments[ 0 ] );
 	
@@ -48,24 +52,30 @@ Question.prototype.getAnswers = function() {
 };
 
 Question.prototype.beforeSave = function() {
-	if ( this.category.isEmpty() ||
-			this.title.isEmpty() ||
-			this.content.isEmpty() ) {
-		throw Exception.emptyFieldException();
-	}
-	
-	if ( !( tags instanceof Array ) ) {
-		throw TypeError( "Question tags field should be instance of array!" );
-	}
-	
 	// Sanitize data
 	
 	this.category = this.category.trim();
 	this.title = this.title.trim();
 	this.content = this.content.trim();
 	
+	if ( this.title.length > MAX_TITLE_LENGTH ) {
+		throw Error( "Maximum question title length is " + MAX_TITLE_LENGTH + " symbols" );
+	}
+	
+	if ( this.content.length > MAX_CONTENT_LENGTH ) {
+		throw Error( "Maximum question content length is " + MAX_CONTENT_LENGTH + " symbols" );
+	}
+	
+	if ( this.category.isEmpty() || this.title.isEmpty() || this.content.isEmpty() || this.tags.length === 0 ) {
+		throw Error( "Cannot post with empty fields!" );
+	}
+	
 	this.tags.forEach(function( tag, index, arr ) {
 		arr[ index ] = tag.trim();
+		
+		if ( arr[ index ].length > MAX_TAG_LENGTH ) {
+			throw Error( "Maximum tag length is " + MAX_TAG_LENGTH + " symbols" );
+		}
 	});
 };
 
@@ -85,6 +95,10 @@ Question.getById = function( id ) {
 		response.question = new Question( response.result );
 	});
 };
+
+Question.MAX_TITLE_LENGTH = MAX_TITLE_LENGTH;
+Question.MAX_CONTENT_LENGTH = MAX_CONTENT_LENGTH;
+Question.MAX_TAG_LENGTH = MAX_TAG_LENGTH;
 
 return Question;
 
