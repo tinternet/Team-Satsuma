@@ -76,6 +76,7 @@ $( "#ask-form" )
 		
 		try {
 			question.save().done(function() {
+				window.location.hash = "/forum/view/" + question.objectId
 				$( "#ask-modal" ).modal( "hide" );
 			});
 		} catch ( er ) {

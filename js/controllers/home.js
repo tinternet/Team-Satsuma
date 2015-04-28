@@ -9,7 +9,7 @@ var RECENT_TOPICS_COUNT = 5;
 function index() {
 	var template = Handlebars.compile( indexTemplate );
 	var filter = {
-		order: "-dateCreated",
+		order: "-createdAt",
 		limit: RECENT_TOPICS_COUNT
 	};
 	
