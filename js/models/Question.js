@@ -47,6 +47,28 @@ Question.prototype.getAnswers = function() {
 	return Answer.loadAll( queryData );
 };
 
+Question.prototype.beforeSave = function() {
+	if ( this.category.isEmpty() ||
+			this.title.isEmpty() ||
+			this.content.isEmpty() ) {
+		throw Exception.emptyFieldException();
+	}
+	
+	if ( !( tags instanceof Array ) ) {
+		throw TypeError( "Question tags field should be instance of array!" );
+	}
+	
+	// Sanitize data
+	
+	this.category = this.category.trim();
+	this.title = this.title.trim();
+	this.content = this.content.trim();
+	
+	this.tags.forEach(function( tag, index, arr ) {
+		arr[ index ] = tag.trim();
+	});
+};
+
 Question.getById = function( id ) {
 	if ( id.isEmpty() ) {
 		throw Error( "Cannot load question without id!" );

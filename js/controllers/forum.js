@@ -118,7 +118,7 @@ function show( id ) {
 					.save()
 					.done(function() {
 						showAnswer( answer );
-						$( this ).find( "textarea" ).val( "" );
+						$( "#post-comment-form textarea" ).val( "" );
 					});
 			});
 			

@@ -50,13 +50,23 @@ function ParseObject( serverResponse ) {
 	this._existsOnServer = true;
 }
 
+function notyError() {
+	noty({
+		text: "There was network related error! Try refreshing the page and/or check internet connection!",
+		timeout: 1000
+	});
+}
+
 function save() {
+	this.beforeSave(); // Used to validate the data
+	
 	var url = URL + this.constructor.name,
 		data = {},
 		self = this,
 		headers = Object.create( parseHeader ),
 		User = require( "models/User" ),
-		currentUser = User.getCurrent();
+		currentUser = User.getCurrent(),
+		isNew = this._existsOnServer;
 		
 	if ( currentUser == null ) {
 		throw Error( "Must be logged in first!" );
@@ -91,15 +101,25 @@ function save() {
 	});
 
 	return $.ajax({
-		method: this._existsOnServer ? "PUT" : "POST",
-		url: this._existsOnServer ? url + "/" + this.objectId : url,
+		method: isNew ? "PUT" : "POST",
+		url: isNew ? url + "/" + this.objectId : url,
 		data: JSON.stringify( data ),
 		headers: headers,
 		context: this
 	})
 	.done(function( response ) {
 		this.constructor.call( this, response );
-	});
+		
+		var message = this.constructor.name;
+		message += isNew ? " updated" : " saved";
+		message += " successfuly";
+		
+		noty({
+			text: message,
+			timeout: 1000
+		});
+	})
+	.fail( notyError );
 }
 
 function remove() {
@@ -111,7 +131,14 @@ function remove() {
 		method: "DELETE",
 		url: URL + this.constructor.name + "/" + this.objectId,
 		headers: parseHeader
-	});
+	})
+	.done(function() {
+		noty({
+			text: this.constructor.name + " removed sucecssfuly",
+			timeout: 1000
+		});
+	})
+	.fail( notyError );
 }
 
 function toPointer() {
@@ -130,6 +157,7 @@ ParseObject.prototype = {
 	save: save,
 	remove: remove,
 	toPointer: toPointer,
+	beforeSave: $.noop,
 	constructor: ParseObject
 }
 

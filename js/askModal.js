@@ -29,7 +29,7 @@ $( "#ask-form" ).on( "submit", function( e ) {
 	});
 	
 	question.save().done(function() {
-		console.log('added');
+		$( "#ask-modal" ).modal( "hide" );
 	});
 });
 });
